@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { YarnBallIcon, MenuIcon, XIcon, WhatsAppIcon } from "./Icons";
+import { YarnBallIcon, MenuIcon, XIcon, WhatsAppIcon, LockIcon } from "./Icons";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,7 +18,7 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "liquid-glass py-3 shadow-lg shadow-blush/5"
+          ? "bg-white/80 backdrop-blur-xl border-b border-blush/10 py-3 shadow-lg shadow-blush/5"
           : "bg-transparent py-5"
       }`}
     >
@@ -31,10 +31,10 @@ export function Header() {
               </div>
             </div>
             <div>
-              <span className="text-lg font-bold text-charcoal tracking-tight block leading-tight">
+              <span className="text-lg font-extrabold text-charcoal tracking-tight block leading-tight">
                 Tejidos a <span className="text-blush">Crochet</span>
               </span>
-              <span className="text-[10px] text-charcoal/30 font-medium tracking-widest uppercase">
+              <span className="text-[10px] text-charcoal/40 font-semibold tracking-widest uppercase">
                 Artesanía con amor
               </span>
             </div>
@@ -43,13 +43,13 @@ export function Header() {
           <nav className="hidden sm:flex items-center gap-1">
             <Link
               href="/"
-              className="px-5 py-2.5 text-sm font-medium text-charcoal/60 hover:text-blush rounded-full hover:bg-blush/5 transition-all duration-300"
+              className="px-5 py-2.5 text-sm font-semibold text-charcoal/70 hover:text-blush rounded-full hover:bg-blush/5 transition-all duration-300"
             >
               Catálogo
             </Link>
             <Link
               href="/admin"
-              className="px-5 py-2.5 text-sm font-medium text-charcoal/60 hover:text-blush rounded-full hover:bg-blush/5 transition-all duration-300"
+              className="px-5 py-2.5 text-sm font-semibold text-charcoal/70 hover:text-blush rounded-full hover:bg-blush/5 transition-all duration-300"
             >
               Admin
             </Link>
@@ -58,7 +58,7 @@ export function Header() {
               href="https://wa.me/56936621284"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-whatsapp text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-whatsapp-hover transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-whatsapp/20 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 bg-whatsapp text-white text-sm font-bold px-5 py-2.5 rounded-full hover:bg-whatsapp-hover transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-whatsapp/20 hover:-translate-y-0.5"
             >
               <WhatsAppIcon className="w-4 h-4" />
               WhatsApp
@@ -67,7 +67,7 @@ export function Header() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="sm:hidden p-2.5 rounded-xl liquid-glass"
+            className="sm:hidden p-2.5 rounded-xl bg-white/80 backdrop-blur-xl border border-blush/10"
             aria-label="Menú"
           >
             {menuOpen ? (
@@ -79,16 +79,16 @@ export function Header() {
         </div>
 
         {menuOpen && (
-          <div className="sm:hidden mt-3 liquid-glass rounded-2xl p-3 space-y-1">
-            <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-charcoal/70 hover:text-blush hover:bg-blush/5 rounded-xl transition-all">
+          <div className="sm:hidden mt-3 bg-white/90 backdrop-blur-xl rounded-2xl p-3 space-y-1 border border-blush/10 shadow-xl shadow-blush/5">
+            <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-charcoal/70 hover:text-blush hover:bg-blush/5 rounded-xl transition-all">
               <YarnBallIcon className="w-4 h-4" />
               Catálogo
             </Link>
-            <Link href="/admin" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-charcoal/70 hover:text-blush hover:bg-blush/5 rounded-xl transition-all">
+            <Link href="/admin" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-charcoal/70 hover:text-blush hover:bg-blush/5 rounded-xl transition-all">
               <LockIcon className="w-4 h-4" />
               Admin
             </Link>
-            <a href="https://wa.me/56936621284" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-whatsapp hover:bg-whatsapp/5 rounded-xl transition-all">
+            <a href="https://wa.me/56936621284" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-whatsapp hover:bg-whatsapp/5 rounded-xl transition-all">
               <WhatsAppIcon className="w-4 h-4" />
               WhatsApp
             </a>
@@ -96,14 +96,5 @@ export function Header() {
         )}
       </div>
     </header>
-  );
-}
-
-function LockIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-      <path d="M7 11V7a5 5 0 0110 0v4" />
-    </svg>
   );
 }

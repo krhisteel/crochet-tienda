@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { WhatsAppIcon, ChevronDownIcon, YarnBallIcon } from "./Icons";
 
@@ -12,16 +13,25 @@ export function Banner() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden min-h-[85vh] flex items-center bg-gradient-to-br from-charcoal via-charcoal-light to-charcoal">
+    <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+      <div className="absolute inset-0">
+        <Image
+          src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=1920&q=80"
+          alt="Tejidos a crochet artesanales"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal/85 via-charcoal/75 to-charcoal/90" />
+      </div>
+
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 opacity-[0.04]">
+        <div className="absolute top-20 left-20 opacity-[0.06]">
           <YarnBallIcon className="w-40 h-40 text-white" />
         </div>
-        <div className="absolute bottom-20 right-20 opacity-[0.04]">
+        <div className="absolute bottom-20 right-20 opacity-[0.06]">
           <YarnBallIcon className="w-56 h-56 text-white" />
-        </div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02]">
-          <YarnBallIcon className="w-96 h-96 text-white" />
         </div>
       </div>
 
@@ -33,11 +43,11 @@ export function Banner() {
             }`}
           >
             <span className="w-2 h-2 rounded-full bg-whatsapp animate-pulse" />
-            <span className="text-white/70 text-xs font-medium tracking-wide">Hecho a mano con amor</span>
+            <span className="text-white/80 text-xs font-semibold tracking-wide">Hecho a mano con amor</span>
           </div>
 
           <h1
-            className={`text-5xl sm:text-7xl font-bold text-white mb-8 leading-[1.05] tracking-tight transition-all duration-700 delay-100 ${
+            className={`text-5xl sm:text-7xl font-extrabold text-white mb-8 leading-[1.05] tracking-tight transition-all duration-700 delay-100 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
@@ -61,7 +71,7 @@ export function Banner() {
           </h1>
 
           <p
-            className={`text-lg sm:text-xl text-white/40 max-w-lg mb-12 leading-relaxed transition-all duration-700 delay-200 ${
+            className={`text-lg sm:text-xl text-white/60 max-w-lg mb-12 leading-relaxed transition-all duration-700 delay-200 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
@@ -76,7 +86,7 @@ export function Banner() {
           >
             <Link
               href="#catalogo"
-              className="group inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blush to-blush-dark text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 shadow-xl shadow-blush/25 hover:shadow-2xl hover:shadow-blush/35 hover:-translate-y-1 shimmer"
+              className="group inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blush to-blush-dark text-white font-bold px-10 py-4 rounded-full transition-all duration-300 shadow-xl shadow-blush/25 hover:shadow-2xl hover:shadow-blush/35 hover:-translate-y-1 shimmer"
             >
               Ver Catálogo
               <ChevronDownIcon className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
@@ -84,7 +94,7 @@ export function Banner() {
             <Link
               href="https://wa.me/56936621284"
               target="_blank"
-              className="group inline-flex items-center justify-center gap-3 liquid-glass text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 hover:bg-white/10 hover:-translate-y-1"
+              className="group inline-flex items-center justify-center gap-3 liquid-glass text-white font-bold px-10 py-4 rounded-full transition-all duration-300 hover:bg-white/10 hover:-translate-y-1"
             >
               <WhatsAppIcon className="w-5 h-5" />
               Escribir por WhatsApp
