@@ -28,7 +28,7 @@ function whatsappLink(product: Product) {
   return `https://wa.me/56936621284?text=${msg}`;
 }
 
-const categoryIcons: Record<string, string> = {
+const categoryLabels: Record<string, string> = {
   Amigurumis: "Amigurumis",
   Ropa: "Ropa",
   Accesorios: "Accesorios",
@@ -50,16 +50,16 @@ export function ProductCard({ product }: { product: Product }) {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
-            <div className="flex items-center justify-center h-full bg-gradient-to-br from-blush-pale/40 via-cream to-beige">
+            <div className="flex items-center justify-center h-full bg-gradient-to-br from-rose-100 via-rose-50 to-cream">
               <YarnBallPlaceholder />
             </div>
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-rose-600/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           <div className="absolute top-4 left-4 flex flex-col gap-2">
             {product.featured && (
-              <span className="inline-flex items-center gap-1 bg-gradient-to-r from-amber to-amber-light text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1 bg-gradient-to-r from-rose-400 to-rose-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
                 <StarIcon /> Destacado
               </span>
             )}
@@ -67,7 +67,7 @@ export function ProductCard({ product }: { product: Product }) {
 
           {!product.available && (
             <div className="absolute top-4 right-4">
-              <span className="inline-flex items-center bg-charcoal/60 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
+              <span className="inline-flex items-center bg-rose-500/60 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
                 Bajo Pedido
               </span>
             </div>
@@ -77,27 +77,27 @@ export function ProductCard({ product }: { product: Product }) {
 
       <div className="p-5">
         <div className="flex items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber bg-amber/8 rounded-full px-2.5 py-1">
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-rose-500 bg-rose-100 rounded-full px-2.5 py-1">
             <ClockIcon className="w-3 h-3" />
             {product.craftingTime}
           </span>
-          <span className="text-[10px] text-charcoal/25 font-semibold uppercase tracking-widest">
-            {categoryIcons[product.category] || product.category}
+          <span className="text-[10px] text-rose-text/30 font-semibold uppercase tracking-widest">
+            {categoryLabels[product.category] || product.category}
           </span>
         </div>
 
         <Link href={`/producto/${product.id}`}>
-          <h3 className="font-bold text-charcoal text-[15px] leading-snug line-clamp-2 mb-3 group-hover:text-blush transition-colors duration-300">
+          <h3 className="font-bold text-rose-text text-[15px] leading-snug line-clamp-2 mb-3 group-hover:text-rose-400 transition-colors duration-300">
             {product.title}
           </h3>
         </Link>
 
-        <p className="text-[13px] text-charcoal/40 line-clamp-2 leading-relaxed mb-4">
+        <p className="text-[13px] text-rose-text-light/60 line-clamp-2 leading-relaxed mb-4">
           {product.description}
         </p>
 
-        <div className="flex items-center justify-between pt-4 border-t border-black/5">
-          <span className="text-xl font-bold text-charcoal">
+        <div className="flex items-center justify-between pt-4 border-t border-rose-200/30">
+          <span className="text-xl font-bold text-rose-text">
             {formatPrice(product.price)}
           </span>
           <a

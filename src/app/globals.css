@@ -2,18 +2,17 @@
 
 @theme inline {
   --color-cream: #FFF5F7;
-  --color-blush: #E8A0B4;
-  --color-blush-light: #F0B8C8;
-  --color-blush-dark: #D4849A;
-  --color-blush-pale: #FBD5DE;
-  --color-beige: #F5E6EA;
-  --color-beige-dark: #E8D4DA;
-  --color-charcoal: #3D2C33;
-  --color-charcoal-light: #5A4550;
+  --color-rose-50: #FFF0F3;
+  --color-rose-100: #FBD5DE;
+  --color-rose-200: #F0B8C8;
+  --color-rose-300: #E8A0B4;
+  --color-rose-400: #D4849A;
+  --color-rose-500: #C06E86;
+  --color-rose-600: #9E5470;
+  --color-rose-text: #5C2D3E;
+  --color-rose-text-light: #7A4A5C;
   --color-whatsapp: #25D366;
   --color-whatsapp-hover: #1da851;
-  --color-amber: #C9A87C;
-  --color-amber-light: #E0C9A8;
   --color-success: #059669;
   --color-danger: #dc2626;
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
@@ -26,7 +25,7 @@
 
 body {
   background: #FFF5F7;
-  color: #3D2C33;
+  color: #5C2D3E;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
@@ -38,35 +37,35 @@ body {
 
 /* Liquid Glass */
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 240, 243, 0.7);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(232, 160, 180, 0.15);
+  border: 1px solid rgba(232, 160, 180, 0.18);
   box-shadow:
-    0 8px 32px rgba(212, 132, 154, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 8px 32px rgba(212, 132, 154, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .liquid-card {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 240, 243, 0.7);
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid rgba(232, 160, 180, 0.12);
+  border: 1px solid rgba(232, 160, 180, 0.14);
   box-shadow:
-    0 4px 24px rgba(212, 132, 154, 0.04),
+    0 4px 24px rgba(212, 132, 154, 0.06),
     0 1px 3px rgba(0,0,0,0.02),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .liquid-card:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 240, 243, 0.9);
   box-shadow:
-    0 12px 40px rgba(212, 132, 154, 0.1),
+    0 12px 40px rgba(212, 132, 154, 0.12),
     0 4px 12px rgba(0,0,0,0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
   transform: translateY(-4px);
-  border-color: rgba(232, 160, 180, 0.25);
+  border-color: rgba(232, 160, 180, 0.3);
 }
 
 /* Shimmer */
@@ -84,9 +83,9 @@ body {
   background: linear-gradient(
     105deg,
     transparent 40%,
-    rgba(255, 255, 255, 0.25) 45%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0.25) 55%,
+    rgba(255, 255, 255, 0.3) 45%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.3) 55%,
     transparent 60%
   );
   animation: shimmer 4s ease-in-out infinite;

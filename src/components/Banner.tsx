@@ -23,14 +23,14 @@ export function Banner() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-charcoal/85 via-charcoal/75 to-charcoal/90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-600/85 via-rose-500/70 to-rose-400/60" />
       </div>
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 opacity-[0.06]">
+        <div className="absolute top-20 left-20 opacity-[0.08]">
           <YarnBallIcon className="w-40 h-40 text-white" />
         </div>
-        <div className="absolute bottom-20 right-20 opacity-[0.06]">
+        <div className="absolute bottom-20 right-20 opacity-[0.08]">
           <YarnBallIcon className="w-56 h-56 text-white" />
         </div>
       </div>
@@ -38,12 +38,12 @@ export function Banner() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-24 w-full">
         <div className="max-w-2xl">
           <div
-            className={`inline-flex items-center gap-2 liquid-glass rounded-full px-4 py-2 mb-8 transition-all duration-700 ${
+            className={`inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-2 mb-8 border border-white/20 transition-all duration-700 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-whatsapp animate-pulse" />
-            <span className="text-white/80 text-xs font-semibold tracking-wide">Hecho a mano con amor</span>
+            <span className="w-2 h-2 rounded-full bg-rose-200 animate-pulse" />
+            <span className="text-white/90 text-xs font-semibold tracking-wide">Hecho a mano con amor</span>
           </div>
 
           <h1
@@ -55,7 +55,7 @@ export function Banner() {
             <br />
             cuenta una{" "}
             <span className="relative inline-block">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blush-light via-blush to-amber-light">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-100 via-rose-200 to-rose-100">
                 historia
               </span>
               <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
@@ -63,7 +63,7 @@ export function Banner() {
                 <defs>
                   <linearGradient id="underline-grad" x1="0" y1="0" x2="200" y2="0">
                     <stop offset="0%" stopColor="#F0B8C8" />
-                    <stop offset="100%" stopColor="#E0C9A8" />
+                    <stop offset="100%" stopColor="#FBD5DE" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -71,7 +71,7 @@ export function Banner() {
           </h1>
 
           <p
-            className={`text-lg sm:text-xl text-white/60 max-w-lg mb-12 leading-relaxed transition-all duration-700 delay-200 ${
+            className={`text-lg sm:text-xl text-white/70 max-w-lg mb-12 leading-relaxed transition-all duration-700 delay-200 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
@@ -86,7 +86,7 @@ export function Banner() {
           >
             <Link
               href="#catalogo"
-              className="group inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blush to-blush-dark text-white font-bold px-10 py-4 rounded-full transition-all duration-300 shadow-xl shadow-blush/25 hover:shadow-2xl hover:shadow-blush/35 hover:-translate-y-1 shimmer"
+              className="group inline-flex items-center justify-center gap-3 bg-white text-rose-500 font-bold px-10 py-4 rounded-full transition-all duration-300 shadow-xl shadow-rose-400/20 hover:shadow-2xl hover:shadow-rose-300/30 hover:-translate-y-1 shimmer"
             >
               Ver Catálogo
               <ChevronDownIcon className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
@@ -94,7 +94,7 @@ export function Banner() {
             <Link
               href="https://wa.me/56936621284"
               target="_blank"
-              className="group inline-flex items-center justify-center gap-3 liquid-glass text-white font-bold px-10 py-4 rounded-full transition-all duration-300 hover:bg-white/10 hover:-translate-y-1"
+              className="group inline-flex items-center justify-center gap-3 bg-white/15 backdrop-blur-sm border border-white/25 text-white font-bold px-10 py-4 rounded-full transition-all duration-300 hover:bg-white/25 hover:-translate-y-1"
             >
               <WhatsAppIcon className="w-5 h-5" />
               Escribir por WhatsApp

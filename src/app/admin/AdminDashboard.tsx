@@ -62,12 +62,12 @@ export function AdminDashboard() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <svg className="w-12 h-12 mx-auto mb-4 text-blush/30 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-12 h-12 mx-auto mb-4 text-rose-300/40 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
             <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
           </svg>
-          <p className="text-sm text-charcoal/40 font-medium">Cargando productos...</p>
+          <p className="text-sm text-rose-text/40 font-medium">Cargando productos...</p>
         </div>
       </div>
     );
@@ -77,22 +77,22 @@ export function AdminDashboard() {
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-16 pt-24 sm:pt-32">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-          <h1 className="text-3xl font-bold text-charcoal">Administración</h1>
-          <p className="text-sm text-charcoal/40 mt-1">
+          <h1 className="text-3xl font-bold text-rose-text">Administración</h1>
+          <p className="text-sm text-rose-text/40 mt-1">
             {products.length} producto{products.length !== 1 ? "s" : ""} registrado{products.length !== 1 ? "s" : ""}
           </p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={handleLogout}
-            className="inline-flex items-center gap-2 rounded-2xl border border-black/5 bg-white text-charcoal/40 px-5 py-2.5 text-sm font-medium hover:bg-cream hover:text-charcoal transition-all duration-300"
+            className="inline-flex items-center gap-2 rounded-2xl border border-rose-200/30 bg-white text-rose-text/40 px-5 py-2.5 text-sm font-medium hover:bg-rose-50 hover:text-rose-text transition-all duration-300"
           >
             <LogoutIcon className="w-4 h-4" />
             Salir
           </button>
           <Link
             href="/admin/nuevo"
-            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blush to-blush-dark text-white font-semibold px-6 py-2.5 hover:shadow-lg hover:shadow-blush/20 transition-all duration-300 text-sm"
+            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-rose-300 to-rose-400 text-white font-semibold px-6 py-2.5 hover:shadow-lg hover:shadow-rose-300/20 transition-all duration-300 text-sm"
           >
             <PlusIcon className="w-4 h-4" />
             Nuevo
@@ -102,12 +102,12 @@ export function AdminDashboard() {
 
       {products.length === 0 ? (
         <div className="text-center py-24 liquid-card rounded-3xl">
-          <BoxIcon className="w-16 h-16 mx-auto mb-6 text-charcoal/10" />
-          <h3 className="text-xl font-bold text-charcoal mb-2">Sin productos</h3>
-          <p className="text-sm text-charcoal/40 mb-8">Agregá tu primer producto al catálogo</p>
+          <BoxIcon className="w-16 h-16 mx-auto mb-6 text-rose-200/40" />
+          <h3 className="text-xl font-bold text-rose-text mb-2">Sin productos</h3>
+          <p className="text-sm text-rose-text/40 mb-8">Agregá tu primer producto al catálogo</p>
           <Link
             href="/admin/nuevo"
-            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blush to-blush-dark text-white font-semibold px-8 py-3 hover:shadow-lg hover:shadow-blush/20 transition-all duration-300 text-sm"
+            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-rose-300 to-rose-400 text-white font-semibold px-8 py-3 hover:shadow-lg hover:shadow-rose-300/20 transition-all duration-300 text-sm"
           >
             <PlusIcon className="w-4 h-4" />
             Agregar producto
@@ -117,17 +117,17 @@ export function AdminDashboard() {
         <div className="liquid-card rounded-3xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-charcoal/[0.03] border-b border-black/5">
+              <thead className="bg-rose-100/30 border-b border-rose-200/20">
                 <tr>
-                  <th className="px-6 py-4 font-bold text-charcoal/40 text-[11px] uppercase tracking-widest">Producto</th>
-                  <th className="px-6 py-4 font-bold text-charcoal/40 text-[11px] uppercase tracking-widest hidden sm:table-cell">Categoría</th>
-                  <th className="px-6 py-4 font-bold text-charcoal/40 text-[11px] uppercase tracking-widest hidden sm:table-cell">Precio</th>
-                  <th className="px-6 py-4 font-bold text-charcoal/40 text-[11px] uppercase tracking-widest hidden md:table-cell">Estado</th>
-                  <th className="px-6 py-4 font-bold text-charcoal/40 text-[11px] uppercase tracking-widest hidden md:table-cell">Destacado</th>
-                  <th className="px-6 py-4 font-bold text-charcoal/40 text-[11px] uppercase tracking-widest text-right">Acciones</th>
+                  <th className="px-6 py-4 font-bold text-rose-text/40 text-[11px] uppercase tracking-widest">Producto</th>
+                  <th className="px-6 py-4 font-bold text-rose-text/40 text-[11px] uppercase tracking-widest hidden sm:table-cell">Categoría</th>
+                  <th className="px-6 py-4 font-bold text-rose-text/40 text-[11px] uppercase tracking-widest hidden sm:table-cell">Precio</th>
+                  <th className="px-6 py-4 font-bold text-rose-text/40 text-[11px] uppercase tracking-widest hidden md:table-cell">Estado</th>
+                  <th className="px-6 py-4 font-bold text-rose-text/40 text-[11px] uppercase tracking-widest hidden md:table-cell">Destacado</th>
+                  <th className="px-6 py-4 font-bold text-rose-text/40 text-[11px] uppercase tracking-widest text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-black/5">
+              <tbody className="divide-y divide-rose-200/15">
                 {products.map((product) => (
                   <AdminProductRow key={product.id} product={product} onUpdate={fetchProducts} />
                 ))}
@@ -178,16 +178,16 @@ function AdminProductRow({ product, onUpdate }: { product: Product; onUpdate: ()
   }
 
   return (
-    <tr className={`hover:bg-blush/[0.02] transition-colors duration-300 ${isPending ? "opacity-40" : ""}`}>
+    <tr className={`hover:bg-rose-100/20 transition-colors duration-300 ${isPending ? "opacity-40" : ""}`}>
       <td className="px-6 py-5">
-        <span className="font-semibold text-charcoal text-sm">{product.title}</span>
+        <span className="font-semibold text-rose-text text-sm">{product.title}</span>
       </td>
       <td className="px-6 py-5 hidden sm:table-cell">
-        <span className="text-[11px] font-bold text-charcoal/40 bg-charcoal/5 rounded-full px-3 py-1 uppercase tracking-wider">
+        <span className="text-[11px] font-bold text-rose-text/40 bg-rose-100 rounded-full px-3 py-1 uppercase tracking-wider">
           {product.category}
         </span>
       </td>
-      <td className="px-6 py-5 hidden sm:table-cell text-sm text-charcoal/60 font-semibold">
+      <td className="px-6 py-5 hidden sm:table-cell text-sm text-rose-text/60 font-semibold">
         {formatPrice(product.price)}
       </td>
       <td className="px-6 py-5 hidden md:table-cell">
@@ -195,11 +195,11 @@ function AdminProductRow({ product, onUpdate }: { product: Product; onUpdate: ()
           onClick={toggleAvailable}
           className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-300 ${
             product.available
-              ? "bg-success/10 text-success hover:bg-success/20"
-              : "bg-amber/10 text-amber hover:bg-amber/20"
+              ? "bg-rose-300/15 text-rose-500 hover:bg-rose-300/25"
+              : "bg-rose-200/50 text-rose-400 hover:bg-rose-200"
           }`}
         >
-          <span className={`w-1.5 h-1.5 rounded-full ${product.available ? "bg-success" : "bg-amber"}`} />
+          <span className={`w-1.5 h-1.5 rounded-full ${product.available ? "bg-rose-400" : "bg-rose-300"}`} />
           {product.available ? "Disponible" : "Bajo Pedido"}
         </button>
       </td>
@@ -208,8 +208,8 @@ function AdminProductRow({ product, onUpdate }: { product: Product; onUpdate: ()
           onClick={toggleFeatured}
           className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-300 ${
             product.featured
-              ? "bg-blush/10 text-blush hover:bg-blush/20"
-              : "bg-charcoal/5 text-charcoal/25 hover:bg-charcoal/10"
+              ? "bg-rose-300/15 text-rose-400 hover:bg-rose-300/25"
+              : "bg-rose-100/50 text-rose-text/25 hover:bg-rose-100"
           }`}
         >
           <svg className="w-3 h-3" viewBox="0 0 24 24" fill={product.featured ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">

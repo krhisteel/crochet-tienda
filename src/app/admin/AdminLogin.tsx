@@ -22,11 +22,11 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blush/10 to-beige mb-6">
-            <LockIcon className="w-8 h-8 text-blush" />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-rose-100 to-rose-200 mb-6">
+            <LockIcon className="w-8 h-8 text-rose-400" />
           </div>
-          <h1 className="text-2xl font-bold text-charcoal mb-2">Panel de Admin</h1>
-          <p className="text-sm text-charcoal/40">
+          <h1 className="text-2xl font-bold text-rose-text mb-2">Panel de Admin</h1>
+          <p className="text-sm text-rose-text/40">
             Ingresa el token para continuar
           </p>
         </div>
@@ -36,11 +36,11 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
             value={token}
             onChange={(e) => setToken(e.target.value)}
             placeholder="Token de administrador"
-            className="w-full rounded-2xl border border-black/5 bg-white px-5 py-4 text-sm text-charcoal placeholder:text-charcoal/20 focus:outline-none focus:ring-2 focus:ring-blush/20 focus:border-blush/30 text-center transition-all duration-300"
+            className="w-full rounded-2xl border border-rose-200/50 bg-white px-5 py-4 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/30 focus:border-rose-300 text-center transition-all duration-300"
           />
           <button
             type="submit"
-            className="w-full rounded-2xl bg-gradient-to-r from-blush to-blush-dark text-white font-semibold py-4 hover:shadow-lg hover:shadow-blush/20 transition-all duration-300 text-sm"
+            className="w-full rounded-2xl bg-gradient-to-r from-rose-300 to-rose-400 text-white font-semibold py-4 hover:shadow-lg hover:shadow-rose-300/20 transition-all duration-300 text-sm"
           >
             Entrar
           </button>

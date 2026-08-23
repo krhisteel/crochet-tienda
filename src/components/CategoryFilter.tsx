@@ -41,8 +41,8 @@ export function CategoryFilter() {
             onClick={() => setCategory(c.value)}
             className={`flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
               isActive
-                ? "bg-gradient-to-r from-blush to-blush-dark text-white shadow-lg shadow-blush/20"
-                : "liquid-card text-charcoal/60 hover:text-blush hover:border-blush/20"
+                ? "bg-gradient-to-r from-rose-300 to-rose-400 text-white shadow-lg shadow-rose-300/25"
+                : "liquid-card text-rose-text/50 hover:text-rose-400 hover:border-rose-300/30"
             }`}
           >
             {c.icon && <c.icon className="w-3.5 h-3.5" />}

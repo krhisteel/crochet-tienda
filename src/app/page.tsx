@@ -28,13 +28,13 @@ export default async function HomePage({
 
       <section id="catalogo" className="relative mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24">
         <div className="text-center mb-12">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold text-blush bg-blush/8 rounded-full px-4 py-1.5 uppercase tracking-widest mb-4">
+          <span className="inline-flex items-center gap-2 text-xs font-semibold text-rose-400 bg-rose-100 rounded-full px-4 py-1.5 uppercase tracking-widest mb-4">
             Catálogo
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-charcoal mb-3">
+          <h2 className="text-3xl sm:text-4xl font-bold text-rose-text mb-3">
             Nuestros Tejidos
           </h2>
-          <p className="text-sm text-charcoal/40 max-w-md mx-auto">
+          <p className="text-sm text-rose-text/40 max-w-md mx-auto">
             Cada pieza es única, tejida a mano con dedicación y los mejores materiales
           </p>
         </div>
@@ -46,23 +46,23 @@ export default async function HomePage({
         </div>
 
         <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-charcoal/30 font-medium">
+          <p className="text-sm text-rose-text/30 font-medium">
             {products.length} producto{products.length !== 1 ? "s" : ""} encontrado{products.length !== 1 ? "s" : ""}
           </p>
         </div>
 
         {products.length === 0 ? (
           <div className="text-center py-24 liquid-card rounded-3xl">
-            <svg className="w-16 h-16 mx-auto mb-6 text-charcoal/10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-16 h-16 mx-auto mb-6 text-rose-200/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
               <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
               <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
               <path d="M8 17c1 1 2.5 1.5 4 1.5s3-.5 4-1.5" />
             </svg>
-            <h3 className="text-xl font-bold text-charcoal mb-2">
+            <h3 className="text-xl font-bold text-rose-text mb-2">
               {params.cat ? "Sin resultados" : "Catálogo vacío"}
             </h3>
-            <p className="text-sm text-charcoal/40 max-w-sm mx-auto">
+            <p className="text-sm text-rose-text/40 max-w-sm mx-auto">
               {params.cat
                 ? "No hay productos en esta categoría. Probá con otra."
                 : "Pronto agregaremos nuevos tejidos artesanales."}
@@ -81,17 +81,17 @@ export default async function HomePage({
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-16 sm:pb-24">
         <div className="liquid-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-blush/5 blur-[80px] rounded-full" />
-          <svg className="w-12 h-12 mx-auto mb-6 text-blush/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-rose-300/10 blur-[80px] rounded-full" />
+          <svg className="w-12 h-12 mx-auto mb-6 text-rose-300/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
             <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
             <path d="M8 17c1 1 2.5 1.5 4 1.5s3-.5 4-1.5" />
           </svg>
-          <h3 className="text-2xl sm:text-3xl font-bold text-charcoal mb-4">
+          <h3 className="text-2xl sm:text-3xl font-bold text-rose-text mb-4">
             ¿Tenés un diseño en mente?
           </h3>
-          <p className="text-sm text-charcoal/40 max-w-md mx-auto mb-8">
+          <p className="text-sm text-rose-text/40 max-w-md mx-auto mb-8">
             Hacemos pedidos personalizados. Contanos tu idea y la hacemos realidad con amor y dedicación.
           </p>
           <a

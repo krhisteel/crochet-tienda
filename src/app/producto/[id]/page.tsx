@@ -24,10 +24,10 @@ export default async function ProductPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-16 pt-24 sm:pt-32">
-      <nav className="mb-10 flex items-center gap-2 text-sm text-charcoal/30">
-        <a href="/" className="hover:text-blush transition-colors duration-300">Catálogo</a>
+      <nav className="mb-10 flex items-center gap-2 text-sm text-rose-text/30">
+        <a href="/" className="hover:text-rose-400 transition-colors duration-300">Catálogo</a>
         <span>/</span>
-        <span className="text-charcoal/60">{product.title}</span>
+        <span className="text-rose-text/60">{product.title}</span>
       </nav>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
@@ -43,7 +43,7 @@ export default async function ProductPage({
                 priority
               />
             ) : (
-              <div className="flex items-center justify-center h-full bg-gradient-to-br from-blush-pale/40 via-cream to-beige">
+              <div className="flex items-center justify-center h-full bg-gradient-to-br from-rose-100 via-rose-50 to-cream">
                 <svg className="w-24 h-24 opacity-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
@@ -57,38 +57,38 @@ export default async function ProductPage({
 
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center rounded-full bg-charcoal/5 text-charcoal/50 text-[11px] font-semibold px-3 py-1.5 uppercase tracking-widest">
+            <span className="inline-flex items-center rounded-full bg-rose-100 text-rose-text/50 text-[11px] font-semibold px-3 py-1.5 uppercase tracking-widest">
               {product.category}
             </span>
             {!product.available && (
-              <span className="inline-flex items-center rounded-full bg-amber/10 text-amber text-[11px] font-bold px-3 py-1.5 uppercase tracking-widest">
+              <span className="inline-flex items-center rounded-full bg-rose-200 text-rose-500 text-[11px] font-bold px-3 py-1.5 uppercase tracking-widest">
                 Bajo Pedido
               </span>
             )}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal leading-[1.1]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-rose-text leading-[1.1]">
             {product.title}
           </h1>
 
           <div className="inline-flex items-center gap-3 liquid-card rounded-2xl px-5 py-3.5 w-fit">
-            <div className="w-10 h-10 rounded-xl bg-amber/10 flex items-center justify-center">
-              <svg className="w-5 h-5 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center">
+              <svg className="w-5 h-5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
             </div>
             <div>
-              <p className="text-[11px] text-charcoal/30 font-semibold uppercase tracking-wider">Tiempo de tejido</p>
-              <p className="text-sm font-bold text-charcoal">{product.craftingTime}</p>
+              <p className="text-[11px] text-rose-text/30 font-semibold uppercase tracking-wider">Tiempo de tejido</p>
+              <p className="text-sm font-bold text-rose-text">{product.craftingTime}</p>
             </div>
           </div>
 
-          <div className="text-4xl font-bold text-charcoal">
+          <div className="text-4xl font-bold text-rose-text">
             {formatPrice(product.price)}
           </div>
 
-          <div className="text-sm text-charcoal/50 leading-relaxed whitespace-pre-wrap">
+          <div className="text-sm text-rose-text-light/60 leading-relaxed whitespace-pre-wrap">
             {product.description}
           </div>
 
@@ -100,9 +100,9 @@ export default async function ProductPage({
           </div>
 
           <div className="liquid-card rounded-2xl p-6">
-            <h3 className="text-sm font-bold text-charcoal mb-4 flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-blush/10 flex items-center justify-center">
-                <svg className="w-4 h-4 text-blush" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <h3 className="text-sm font-bold text-rose-text mb-4 flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center">
+                <svg className="w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
                   <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
@@ -117,8 +117,8 @@ export default async function ProductPage({
                 "Secar a la sombra, sin exprimir",
                 "No planchar directamente",
               ].map((cuidado, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-charcoal/50">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blush/40 mt-1.5 shrink-0" />
+                <li key={i} className="flex items-start gap-3 text-sm text-rose-text-light/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-300 mt-1.5 shrink-0" />
                   {cuidado}
                 </li>
               ))}
