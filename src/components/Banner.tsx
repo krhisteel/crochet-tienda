@@ -16,8 +16,8 @@ export function Banner() {
     <section className="relative overflow-hidden min-h-[90vh] flex items-center">
       <div className="absolute inset-0">
         <Image
-          src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1920&q=80"
-          alt="Bolas de lana rosa pastel para crochet"
+          src="/hero.png"
+          alt="Tejidos a crochet artesanales"
           fill
           className="object-cover"
           priority
