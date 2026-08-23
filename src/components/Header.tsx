@@ -2,99 +2,118 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { YarnBallIcon, MenuIcon, XIcon, WhatsAppIcon, LockIcon } from "./Icons";
+import { YarnBallIcon, MenuIcon, XIcon, WhatsAppIcon } from "./Icons";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/85 backdrop-blur-xl border-b border-rose-200/30 py-3 shadow-lg shadow-rose-300/10"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-300 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-300/30 group-hover:shadow-rose-300/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
-                <YarnBallIcon className="w-5 h-5 text-white" />
-              </div>
+    <>
+      <header
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
+          scrolled
+            ? "w-[calc(100%-2rem)] max-w-4xl"
+            : "w-[calc(100%-2rem)] max-w-5xl"
+        }`}
+      >
+        <nav
+          className={`flex items-center justify-between gap-4 px-2 py-2 rounded-full transition-all duration-500 ${
+            scrolled
+              ? "bg-white/80 backdrop-blur-2xl shadow-xl shadow-rose-300/15 border border-rose-200/30"
+              : "bg-white/15 backdrop-blur-xl border border-white/20"
+          }`}
+        >
+          <Link href="/" className="flex items-center gap-2.5 pl-3 pr-4 group shrink-0">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-rose-300 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-300/30 group-hover:shadow-rose-300/50 transition-all duration-300 group-hover:scale-110">
+              <YarnBallIcon className="w-4 h-4 text-white" />
             </div>
-            <div>
-              <span className={`text-lg font-extrabold tracking-tight block leading-tight transition-colors duration-500 ${scrolled ? "text-rose-text" : "text-white"}`}>
-                Tejidos a <span className={scrolled ? "text-rose-400" : "text-rose-200"}>Crochet</span>
-              </span>
-              <span className={`text-[10px] font-semibold tracking-widest uppercase transition-colors duration-500 ${scrolled ? "text-rose-text/40" : "text-white/50"}`}>
-                Artesanía con amor
-              </span>
-            </div>
+            <span className={`text-sm font-extrabold tracking-tight transition-colors duration-500 hidden sm:block ${scrolled ? "text-rose-text" : "text-white"}`}>
+              Tejidos a <span className={scrolled ? "text-rose-400" : "text-rose-200"}>Crochet</span>
+            </span>
           </Link>
 
-          <nav className="hidden sm:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1">
             <Link
               href="/"
-              className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ${scrolled ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
+              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${scrolled ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
               Catálogo
             </Link>
             <Link
               href="/admin"
-              className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ${scrolled ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
+              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${scrolled ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
               Admin
             </Link>
-            <div className={`w-px h-5 mx-1 ${scrolled ? "bg-rose-200/30" : "bg-white/20"}`} />
+          </div>
+
+          <div className="flex items-center gap-2 pr-1">
             <a
               href="https://wa.me/56936621284"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-whatsapp text-white text-sm font-bold px-5 py-2.5 rounded-full hover:bg-whatsapp-hover transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-whatsapp/20 hover:-translate-y-0.5"
+              className={`hidden sm:inline-flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-full transition-all duration-300 ${
+                scrolled
+                  ? "bg-whatsapp text-white hover:bg-whatsapp-hover shadow-sm hover:shadow-lg hover:shadow-whatsapp/20"
+                  : "bg-white/20 text-white hover:bg-white/30 border border-white/20"
+              }`}
             >
-              <WhatsAppIcon className="w-4 h-4" />
+              <WhatsAppIcon className="w-3.5 h-3.5" />
               WhatsApp
             </a>
-          </nav>
 
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className={`sm:hidden p-2.5 rounded-xl transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl border border-rose-200/30" : "bg-white/10 backdrop-blur-xl border border-white/20"}`}
-            aria-label="Menú"
-          >
-            {menuOpen ? (
-              <XIcon className={`w-5 h-5 ${scrolled ? "text-rose-text" : "text-white"}`} />
-            ) : (
-              <MenuIcon className={`w-5 h-5 ${scrolled ? "text-rose-text" : "text-white"}`} />
-            )}
-          </button>
-        </div>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className={`md:hidden p-2.5 rounded-full transition-all duration-300 ${
+                scrolled
+                  ? "bg-rose-100/50 text-rose-text hover:bg-rose-100"
+                  : "bg-white/10 text-white hover:bg-white/20"
+              }`}
+              aria-label="Menú"
+            >
+              {menuOpen ? (
+                <XIcon className="w-4 h-4" />
+              ) : (
+                <MenuIcon className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+        </nav>
 
         {menuOpen && (
-          <div className="sm:hidden mt-3 bg-white/95 backdrop-blur-xl rounded-2xl p-3 space-y-1 border border-rose-200/30 shadow-xl shadow-rose-300/10">
-            <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-rose-text/70 hover:text-rose-400 hover:bg-rose-50 rounded-xl transition-all">
+          <div className="md:hidden mt-2 mx-2 bg-white/95 backdrop-blur-2xl rounded-3xl p-4 space-y-1 border border-rose-200/30 shadow-2xl shadow-rose-300/15">
+            <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-rose-text/70 hover:text-rose-400 hover:bg-rose-50 rounded-2xl transition-all">
               <YarnBallIcon className="w-4 h-4" />
               Catálogo
             </Link>
-            <Link href="/admin" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-rose-text/70 hover:text-rose-400 hover:bg-rose-50 rounded-xl transition-all">
-              <LockIcon className="w-4 h-4" />
+            <Link href="/admin" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-rose-text/70 hover:text-rose-400 hover:bg-rose-50 rounded-2xl transition-all">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
               Admin
             </Link>
-            <a href="https://wa.me/56936621284" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-whatsapp hover:bg-rose-50 rounded-xl transition-all">
+            <div className="h-px bg-rose-200/20 my-1" />
+            <a href="https://wa.me/56936621284" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-whatsapp hover:bg-rose-50 rounded-2xl transition-all">
               <WhatsAppIcon className="w-4 h-4" />
               WhatsApp
             </a>
           </div>
         )}
-      </div>
-    </header>
+      </header>
+
+      <div className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+        scrolled
+          ? "h-16 bg-white/60 backdrop-blur-sm border-b border-rose-100/50"
+          : "h-0 bg-transparent"
+      }`} />
+    </>
   );
 }
