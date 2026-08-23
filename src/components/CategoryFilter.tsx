@@ -36,10 +36,10 @@ export function CategoryFilter() {
         <button
           key={c.value}
           onClick={() => setCategory(c.value)}
-          className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all ${
+          className={`flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
             current === c.value
-              ? "bg-charcoal text-white shadow-md"
-              : "bg-white text-charcoal/60 border border-black/8 hover:border-blush hover:text-blush hover:bg-blush/5"
+              ? "bg-gradient-to-r from-blush to-blush-dark text-white shadow-lg shadow-blush/20"
+              : "liquid-card text-charcoal/60 hover:text-blush hover:border-blush/20"
           }`}
         >
           <span className="text-base">{c.icon}</span>

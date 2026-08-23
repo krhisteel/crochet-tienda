@@ -18,28 +18,28 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+    <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-charcoal/5 mb-4">
-            <span className="text-3xl">🔐</span>
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blush/10 to-amber/10 mb-6">
+            <span className="text-4xl">🔐</span>
           </div>
-          <h1 className="text-xl font-bold text-charcoal">Panel de Admin</h1>
-          <p className="text-sm text-charcoal/40 mt-1">
+          <h1 className="text-2xl font-bold text-charcoal mb-2">Panel de Admin</h1>
+          <p className="text-sm text-charcoal/40">
             Ingresa el token para continuar
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="password"
             value={token}
             onChange={(e) => setToken(e.target.value)}
             placeholder="Token de administrador"
-            className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-charcoal placeholder:text-charcoal/30 focus:outline-none focus:ring-2 focus:ring-blush/20 focus:border-blush/40 text-center text-sm"
+            className="w-full rounded-2xl border border-black/5 bg-white px-5 py-4 text-sm text-charcoal placeholder:text-charcoal/20 focus:outline-none focus:ring-2 focus:ring-blush/20 focus:border-blush/30 text-center transition-all duration-300"
           />
           <button
             type="submit"
-            className="w-full rounded-xl bg-charcoal text-white font-semibold py-3 hover:bg-charcoal-light transition-all shadow-sm hover:shadow-md text-sm"
+            className="w-full rounded-2xl bg-gradient-to-r from-blush to-blush-dark text-white font-semibold py-4 hover:shadow-lg hover:shadow-blush/20 transition-all duration-300 text-sm"
           >
             Entrar
           </button>

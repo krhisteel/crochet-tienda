@@ -23,88 +23,91 @@ export default async function ProductPage({
   if (!product) notFound();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
-      <nav className="mb-8 text-sm text-charcoal/40">
-        <a href="/" className="hover:text-blush transition-colors">Catálogo</a>
-        <span className="mx-2">/</span>
-        <span className="text-charcoal/70">{product.title}</span>
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-16 pt-24 sm:pt-32">
+      <nav className="mb-10 flex items-center gap-2 text-sm text-charcoal/30">
+        <a href="/" className="hover:text-blush transition-colors duration-300">Catálogo</a>
+        <span>/</span>
+        <span className="text-charcoal/60">{product.title}</span>
       </nav>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-        <div className="relative aspect-square rounded-3xl overflow-hidden bg-beige/30 border border-black/5">
-          {product.imageUrl ? (
-            <Image
-              src={product.imageUrl}
-              alt={product.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full bg-gradient-to-br from-beige/50 to-cream">
-              <span className="text-8xl opacity-30">🧶</span>
-            </div>
-          )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+        <div className="relative aspect-square rounded-[2rem] overflow-hidden liquid-card p-2">
+          <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden">
+            {product.imageUrl ? (
+              <Image
+                src={product.imageUrl}
+                alt={product.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full bg-gradient-to-br from-blush/5 via-beige to-amber/5">
+                <span className="text-9xl opacity-15">🧶</span>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center rounded-full bg-charcoal/5 text-charcoal/60 text-xs font-medium px-3 py-1.5 uppercase tracking-wider">
+            <span className="inline-flex items-center rounded-full bg-charcoal/5 text-charcoal/50 text-[11px] font-semibold px-3 py-1.5 uppercase tracking-widest">
               {product.category}
             </span>
             {!product.available && (
-              <span className="inline-flex items-center rounded-full bg-amber/10 text-amber text-xs font-bold px-3 py-1.5 uppercase tracking-wider">
+              <span className="inline-flex items-center rounded-full bg-amber/10 text-amber text-[11px] font-bold px-3 py-1.5 uppercase tracking-widest">
                 Bajo Pedido
               </span>
             )}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-bold text-charcoal leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal leading-[1.1]">
             {product.title}
           </h1>
 
-          <div className="inline-flex items-center gap-2 bg-amber/5 border border-amber/10 rounded-xl px-4 py-2.5 w-fit">
-            <span className="text-amber">⏱</span>
-            <span className="text-sm font-medium text-charcoal/70">
-              Tiempo de tejido: <span className="text-amber font-semibold">{product.craftingTime}</span>
-            </span>
+          <div className="inline-flex items-center gap-3 liquid-card rounded-2xl px-5 py-3.5 w-fit">
+            <div className="w-10 h-10 rounded-xl bg-amber/10 flex items-center justify-center">
+              <span className="text-amber text-lg">⏱</span>
+            </div>
+            <div>
+              <p className="text-[11px] text-charcoal/30 font-semibold uppercase tracking-wider">Tiempo de tejido</p>
+              <p className="text-sm font-bold text-charcoal">{product.craftingTime}</p>
+            </div>
           </div>
 
-          <div className="text-3xl font-bold text-charcoal">
+          <div className="text-4xl font-bold text-charcoal">
             {formatPrice(product.price)}
           </div>
 
-          <div className="text-sm text-charcoal/60 leading-relaxed whitespace-pre-wrap">
+          <div className="text-sm text-charcoal/50 leading-relaxed whitespace-pre-wrap">
             {product.description}
           </div>
 
-          <div className="pt-4 border-t border-black/5">
+          <div className="pt-2">
             <ProductActions
               title={product.title}
               price={formatPrice(product.price)}
             />
           </div>
 
-          <div className="bg-beige/30 rounded-2xl p-5 border border-black/5">
-            <h3 className="text-sm font-semibold text-charcoal mb-3">Cuidados del producto</h3>
-            <ul className="space-y-2 text-sm text-charcoal/50">
-              <li className="flex items-start gap-2">
-                <span className="text-blush mt-0.5">•</span>
-                Lavado a mano con agua tibia
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blush mt-0.5">•</span>
-                No usar lejía ni blanqueadores
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blush mt-0.5">•</span>
-                Secar a la sombra, sinexprimir
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blush mt-0.5">•</span>
-                No planchar directamente
-              </li>
+          <div className="liquid-card rounded-2xl p-6">
+            <h3 className="text-sm font-bold text-charcoal mb-4 flex items-center gap-2">
+              <span className="w-8 h-8 rounded-lg bg-blush/10 flex items-center justify-center text-sm">🧶</span>
+              Cuidados del producto
+            </h3>
+            <ul className="space-y-3">
+              {[
+                "Lavado a mano con agua tibia",
+                "No usar lejía ni blanqueadores",
+                "Secar a la sombra, sin exprimir",
+                "No planchar directamente",
+              ].map((cuidado, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-charcoal/50">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blush/40 mt-1.5 shrink-0" />
+                  {cuidado}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
