@@ -9,7 +9,7 @@ export function ProductActions({ title, price }: ProductActionsProps) {
   const msg = encodeURIComponent(
     `Hola! Me interesa el producto: ${title} — ${price}\n¿Está disponible?`
   );
-  const whatsappUrl = `https://wa.me/5491100000000?text=${msg}`;
+  const whatsappUrl = `https://wa.me/56936621284?text=${msg}`;
 
   return (
     <a

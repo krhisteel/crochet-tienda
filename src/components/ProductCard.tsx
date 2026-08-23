@@ -24,7 +24,7 @@ function whatsappLink(product: Product) {
   const msg = encodeURIComponent(
     `Hola! Me interesa el producto: ${product.title} — ${formatPrice(product.price)}\n¿Está disponible?`
   );
-  return `https://wa.me/5491100000000?text=${msg}`;
+  return `https://wa.me/56936621284?text=${msg}`;
 }
 
 const categoryEmoji: Record<string, string> = {
