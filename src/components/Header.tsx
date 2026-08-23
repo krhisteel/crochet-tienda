@@ -108,12 +108,6 @@ export function Header() {
           </div>
         )}
       </header>
-
-      <div className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-        scrolled
-          ? "h-16 bg-white/60 backdrop-blur-sm border-b border-rose-100/50"
-          : "h-0 bg-transparent"
-      }`} />
     </>
   );
 }
