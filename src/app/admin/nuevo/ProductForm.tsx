@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useRef, FormEvent } from "react";
+import { UploadIcon, CheckIcon } from "@/components/Icons";
 
 interface ProductFormProps {
   action: (formData: FormData) => Promise<void>;
@@ -143,24 +144,23 @@ export function ProductForm({ action }: ProductFormProps) {
         >
           {uploading ? (
             <div className="flex flex-col items-center gap-3">
-              <div className="text-3xl animate-spin">🧶</div>
+              <svg className="w-8 h-8 text-blush/30 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
+              </svg>
               <span className="text-sm text-charcoal/40 font-medium">Subiendo imagen...</span>
             </div>
           ) : imageUrl ? (
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-success/10 flex items-center justify-center">
-                <svg className="w-6 h-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
+                <CheckIcon className="w-6 h-6 text-success" />
               </div>
               <span className="text-sm text-success font-semibold">Imagen cargada</span>
               <span className="text-xs text-charcoal/30">Click para cambiar</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3">
-              <svg className="w-10 h-10 text-charcoal/15 group-hover:text-blush/30 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a2.25 2.25 0 002.25-2.25V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
-              </svg>
+              <UploadIcon className="w-10 h-10 text-charcoal/15 group-hover:text-blush/30 transition-colors duration-300" />
               <span className="text-sm text-charcoal/30 font-medium">Click para seleccionar imagen</span>
               <span className="text-xs text-charcoal/20">JPG, PNG, WebP o GIF — Max 5MB</span>
             </div>

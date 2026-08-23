@@ -31,8 +31,9 @@ export default function NewProductPage() {
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 sm:py-16 pt-24 sm:pt-32">
       <div className="mb-10">
         <a href="/admin" className="inline-flex items-center gap-1.5 text-sm text-charcoal/30 hover:text-blush transition-colors duration-300 mb-4">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
           </svg>
           Volver al admin
         </a>

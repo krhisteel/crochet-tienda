@@ -43,8 +43,13 @@ export default async function ProductPage({
                 priority
               />
             ) : (
-              <div className="flex items-center justify-center h-full bg-gradient-to-br from-blush/5 via-beige to-amber/5">
-                <span className="text-9xl opacity-15">🧶</span>
+              <div className="flex items-center justify-center h-full bg-gradient-to-br from-blush-pale/40 via-cream to-beige">
+                <svg className="w-24 h-24 opacity-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
+                  <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
+                  <path d="M8 17c1 1 2.5 1.5 4 1.5s3-.5 4-1.5" />
+                </svg>
               </div>
             )}
           </div>
@@ -68,7 +73,10 @@ export default async function ProductPage({
 
           <div className="inline-flex items-center gap-3 liquid-card rounded-2xl px-5 py-3.5 w-fit">
             <div className="w-10 h-10 rounded-xl bg-amber/10 flex items-center justify-center">
-              <span className="text-amber text-lg">⏱</span>
+              <svg className="w-5 h-5 text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
             </div>
             <div>
               <p className="text-[11px] text-charcoal/30 font-semibold uppercase tracking-wider">Tiempo de tejido</p>
@@ -93,7 +101,13 @@ export default async function ProductPage({
 
           <div className="liquid-card rounded-2xl p-6">
             <h3 className="text-sm font-bold text-charcoal mb-4 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-blush/10 flex items-center justify-center text-sm">🧶</span>
+              <div className="w-8 h-8 rounded-lg bg-blush/10 flex items-center justify-center">
+                <svg className="w-4 h-4 text-blush" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
+                  <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
+                </svg>
+              </div>
               Cuidados del producto
             </h3>
             <ul className="space-y-3">

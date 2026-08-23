@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AdminLogin } from "./AdminLogin";
+import { PlusIcon, LogoutIcon, BoxIcon, TrashIcon } from "@/components/Icons";
 
 interface Product {
   id: string;
@@ -61,7 +62,11 @@ export function AdminDashboard() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="text-4xl mb-4 animate-spin inline-block">🧶</div>
+          <svg className="w-12 h-12 mx-auto mb-4 text-blush/30 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
+            <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
+          </svg>
           <p className="text-sm text-charcoal/40 font-medium">Cargando productos...</p>
         </div>
       </div>
@@ -80,17 +85,16 @@ export function AdminDashboard() {
         <div className="flex gap-2">
           <button
             onClick={handleLogout}
-            className="rounded-2xl border border-black/5 bg-white text-charcoal/40 px-5 py-2.5 text-sm font-medium hover:bg-cream hover:text-charcoal transition-all duration-300"
+            className="inline-flex items-center gap-2 rounded-2xl border border-black/5 bg-white text-charcoal/40 px-5 py-2.5 text-sm font-medium hover:bg-cream hover:text-charcoal transition-all duration-300"
           >
+            <LogoutIcon className="w-4 h-4" />
             Salir
           </button>
           <Link
             href="/admin/nuevo"
             className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blush to-blush-dark text-white font-semibold px-6 py-2.5 hover:shadow-lg hover:shadow-blush/20 transition-all duration-300 text-sm"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
+            <PlusIcon className="w-4 h-4" />
             Nuevo
           </Link>
         </div>
@@ -98,16 +102,14 @@ export function AdminDashboard() {
 
       {products.length === 0 ? (
         <div className="text-center py-24 liquid-card rounded-3xl">
-          <div className="text-6xl mb-6 opacity-20">📦</div>
+          <BoxIcon className="w-16 h-16 mx-auto mb-6 text-charcoal/10" />
           <h3 className="text-xl font-bold text-charcoal mb-2">Sin productos</h3>
           <p className="text-sm text-charcoal/40 mb-8">Agregá tu primer producto al catálogo</p>
           <Link
             href="/admin/nuevo"
             className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blush to-blush-dark text-white font-semibold px-8 py-3 hover:shadow-lg hover:shadow-blush/20 transition-all duration-300 text-sm"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
+            <PlusIcon className="w-4 h-4" />
             Agregar producto
           </Link>
         </div>
@@ -204,21 +206,25 @@ function AdminProductRow({ product, onUpdate }: { product: Product; onUpdate: ()
       <td className="px-6 py-5 hidden md:table-cell">
         <button
           onClick={toggleFeatured}
-          className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-300 ${
+          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-300 ${
             product.featured
               ? "bg-blush/10 text-blush hover:bg-blush/20"
               : "bg-charcoal/5 text-charcoal/25 hover:bg-charcoal/10"
           }`}
         >
-          {product.featured ? "★ Sí" : "☆ No"}
+          <svg className="w-3 h-3" viewBox="0 0 24 24" fill={product.featured ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          {product.featured ? "Sí" : "No"}
         </button>
       </td>
       <td className="px-6 py-5 text-right">
         <button
           onClick={deleteProduct}
           disabled={deleting}
-          className="text-danger/30 hover:text-danger text-xs font-semibold transition-colors duration-300 disabled:opacity-30 hover:underline"
+          className="inline-flex items-center gap-1 text-danger/30 hover:text-danger text-xs font-semibold transition-colors duration-300 disabled:opacity-30"
         >
+          <TrashIcon className="w-3.5 h-3.5" />
           {deleting ? "..." : "Eliminar"}
         </button>
       </td>

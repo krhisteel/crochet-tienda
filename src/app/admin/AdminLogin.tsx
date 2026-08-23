@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { LockIcon } from "@/components/Icons";
 
 interface AdminLoginProps {
   onLogin: () => void;
@@ -21,8 +22,8 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blush/10 to-amber/10 mb-6">
-            <span className="text-4xl">🔐</span>
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blush/10 to-beige mb-6">
+            <LockIcon className="w-8 h-8 text-blush" />
           </div>
           <h1 className="text-2xl font-bold text-charcoal mb-2">Panel de Admin</h1>
           <p className="text-sm text-charcoal/40">
