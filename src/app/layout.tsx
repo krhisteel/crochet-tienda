@@ -14,6 +14,20 @@ export const metadata: Metadata = {
   description:
     "Tienda artesanal de productos tejidos a crochet: amigurumis, ropa, accesorios y patrones digitales. Cada pieza es única y hecha con amor.",
   keywords: ["crochet", "amigurumi", "tejidos a mano", "ropa tejida", "patrones crochet"],
+  openGraph: {
+    title: "Tejidos a Crochet | Artesanías Hechas a Mano",
+    description:
+      "Tienda artesanal de productos tejidos a crochet: amigurumis, ropa, accesorios y patrones digitales.",
+    type: "website",
+    locale: "es_CL",
+    siteName: "Tejidos a Crochet",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tejidos a Crochet | Artesanías Hechas a Mano",
+    description:
+      "Tienda artesanal de productos tejidos a crochet: amigurumis, ropa, accesorios y patrones digitales.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

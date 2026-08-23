@@ -14,9 +14,9 @@ interface Product {
 }
 
 function formatPrice(price: number) {
-  return new Intl.NumberFormat("es-AR", {
+  return new Intl.NumberFormat("es-CL", {
     style: "currency",
-    currency: "ARS",
+    currency: "CLP",
   }).format(price);
 }
 

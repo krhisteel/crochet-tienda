@@ -6,9 +6,9 @@ import { ProductActions } from "./ProductActions";
 export const dynamic = "force-dynamic";
 
 function formatPrice(price: number) {
-  return new Intl.NumberFormat("es-AR", {
+  return new Intl.NumberFormat("es-CL", {
     style: "currency",
-    currency: "ARS",
+    currency: "CLP",
   }).format(price);
 }
 
@@ -73,16 +73,6 @@ export default async function ProductPage({
               title={product.title}
               price={formatPrice(product.price)}
             />
-          </div>
-
-          <div className="rounded-2xl bg-beige/50 p-4 text-sm text-charcoal/60">
-            <p className="font-medium text-charcoal/80 mb-1">Cuidados del producto:</p>
-            <ul className="list-disc list-inside space-y-0.5">
-              <li>Lavado a mano con agua tibia</li>
-              <li>No usar lejía</li>
-              <li>Secar a la sombra</li>
-              <li>No planchar directamente</li>
-            </ul>
           </div>
         </div>
       </div>

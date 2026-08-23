@@ -13,11 +13,13 @@ interface Product {
 }
 
 function formatPrice(price: number) {
-  return new Intl.NumberFormat("es-AR", {
+  return new Intl.NumberFormat("es-CL", {
     style: "currency",
-    currency: "ARS",
+    currency: "CLP",
   }).format(price);
 }
+
+const adminToken = typeof window !== "undefined" ? localStorage.getItem("admin-token") || "" : "";
 
 export function AdminProductRow({ product }: { product: Product }) {
   const router = useRouter();
@@ -27,7 +29,7 @@ export function AdminProductRow({ product }: { product: Product }) {
   async function toggleAvailable() {
     await fetch(`/api/products/${product.id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-admin-token": adminToken },
       body: JSON.stringify({ available: !product.available }),
     });
     startTransition(() => router.refresh());
@@ -36,7 +38,7 @@ export function AdminProductRow({ product }: { product: Product }) {
   async function toggleFeatured() {
     await fetch(`/api/products/${product.id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-admin-token": adminToken },
       body: JSON.stringify({ featured: !product.featured }),
     });
     startTransition(() => router.refresh());
@@ -45,7 +47,10 @@ export function AdminProductRow({ product }: { product: Product }) {
   async function deleteProduct() {
     if (!confirm("¿Eliminar este producto permanentemente?")) return;
     setDeleting(true);
-    await fetch(`/api/products/${product.id}`, { method: "DELETE" });
+    await fetch(`/api/products/${product.id}`, {
+      method: "DELETE",
+      headers: { "x-admin-token": adminToken },
+    });
     startTransition(() => router.refresh());
   }
 

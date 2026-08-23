@@ -52,3 +52,6 @@ prisma.config.ts
 .windsurf/
 skills-lock.json
 AGENTS.md
+
+.vercel
+.env*
