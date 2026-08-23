@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { AdminLogin } from "./AdminLogin";
 import { PlusIcon, LogoutIcon, BoxIcon, TrashIcon } from "@/components/Icons";
@@ -23,23 +23,12 @@ function formatPrice(price: number) {
 
 export function AdminDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("admin-token");
-    if (!token) {
-      setAuthenticated(false);
-      setLoading(false);
-      return;
-    }
-    setAuthenticated(true);
-    fetchProducts();
-  }, []);
-
-  async function fetchProducts() {
+  const fetchProducts = useCallback(async () => {
     try {
-      const res = await fetch("/api/products");
+      const res = await fetch("/api/products", { cache: "no-store" });
       const data = await res.json();
       setProducts(data);
     } catch {
@@ -47,11 +36,23 @@ export function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("admin-token");
+    if (!token) {
+      setAuthenticated(false);
+      return;
+    }
+    setAuthenticated(true);
+    setLoading(true);
+    fetchProducts();
+  }, [fetchProducts]);
 
   function handleLogout() {
     localStorage.removeItem("admin-token");
-    window.location.reload();
+    setAuthenticated(false);
+    setProducts([]);
   }
 
   if (!authenticated) {
@@ -62,11 +63,10 @@ export function AdminDashboard() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <svg className="w-12 h-12 mx-auto mb-4 text-rose-300/40 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
-            <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
-          </svg>
+          <div className="w-12 h-12 mx-auto mb-4 relative">
+            <div className="absolute inset-0 rounded-full border-2 border-rose-200/30" />
+            <div className="absolute inset-0 rounded-full border-2 border-rose-400 border-t-transparent animate-spin" />
+          </div>
           <p className="text-sm text-rose-text/40 font-medium">Cargando productos...</p>
         </div>
       </div>
@@ -143,10 +143,10 @@ export function AdminDashboard() {
 function AdminProductRow({ product, onUpdate }: { product: Product; onUpdate: () => void }) {
   const [isPending, setIsPending] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const adminToken = typeof window !== "undefined" ? localStorage.getItem("admin-token") || "" : "";
 
   async function toggleAvailable() {
     setIsPending(true);
+    const adminToken = localStorage.getItem("admin-token") || "";
     await fetch(`/api/products/${product.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "x-admin-token": adminToken },
@@ -158,6 +158,7 @@ function AdminProductRow({ product, onUpdate }: { product: Product; onUpdate: ()
 
   async function toggleFeatured() {
     setIsPending(true);
+    const adminToken = localStorage.getItem("admin-token") || "";
     await fetch(`/api/products/${product.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "x-admin-token": adminToken },
@@ -170,6 +171,7 @@ function AdminProductRow({ product, onUpdate }: { product: Product; onUpdate: ()
   async function deleteProduct() {
     if (!confirm("¿Eliminar este producto permanentemente?")) return;
     setDeleting(true);
+    const adminToken = localStorage.getItem("admin-token") || "";
     await fetch(`/api/products/${product.id}`, {
       method: "DELETE",
       headers: { "x-admin-token": adminToken },
