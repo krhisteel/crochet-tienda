@@ -25,14 +25,19 @@ export function AdminDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchProducts = useCallback(async () => {
+    setError(null);
     try {
       const res = await fetch("/api/products", { cache: "no-store" });
+      if (!res.ok) throw new Error("Error al cargar productos");
       const data = await res.json();
+      if (data.error) throw new Error(data.error);
       setProducts(data);
-    } catch {
-      console.error("Error fetching products");
+    } catch (err) {
+      console.error("Error fetching products:", err);
+      setError("No se pudo conectar con la base de datos. Intentá de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -68,6 +73,38 @@ export function AdminDashboard() {
             <div className="absolute inset-0 rounded-full border-2 border-rose-400 border-t-transparent animate-spin" />
           </div>
           <p className="text-sm text-rose-text/40 font-medium">Cargando productos...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center liquid-card rounded-3xl p-10 max-w-md">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-rose-100 flex items-center justify-center">
+            <svg className="w-7 h-7 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-bold text-rose-text mb-2">Error de conexión</h3>
+          <p className="text-sm text-rose-text/40 mb-6">{error}</p>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={handleLogout}
+              className="rounded-2xl border border-rose-200/30 bg-white text-rose-text/50 px-5 py-2.5 text-sm font-medium hover:bg-rose-50 transition-all"
+            >
+              Salir
+            </button>
+            <button
+              onClick={() => { setLoading(true); setError(null); fetchProducts(); }}
+              className="rounded-2xl bg-gradient-to-r from-rose-300 to-rose-400 text-white font-semibold px-6 py-2.5 text-sm hover:shadow-lg hover:shadow-rose-300/20 transition-all"
+            >
+              Reintentar
+            </button>
+          </div>
         </div>
       </div>
     );
