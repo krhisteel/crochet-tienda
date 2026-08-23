@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { AdminLogin } from "./AdminLogin";
 
-export function AdminGuard({ children }: { children: React.ReactNode }) {
+export function AdminGuard() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("admin-token");
@@ -25,5 +27,5 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
     return <AdminLogin onLogin={() => setAuthenticated(true)} />;
   }
 
-  return <>{children}</>;
+  return null;
 }

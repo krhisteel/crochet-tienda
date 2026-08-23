@@ -4,12 +4,17 @@
   --color-cream: #FAF8F5;
   --color-blush: #C86D7C;
   --color-blush-light: #d4899a;
+  --color-blush-dark: #b55a6a;
   --color-beige: #EAE3DC;
+  --color-beige-dark: #d9cfc5;
   --color-charcoal: #2D2723;
-  --color-whatsapp: #10B981;
-  --color-whatsapp-hover: #059669;
+  --color-charcoal-light: #4a4340;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #1da851;
   --color-amber: #D97706;
   --color-amber-light: #fbbf24;
+  --color-success: #059669;
+  --color-danger: #dc2626;
   --font-sans: var(--font-geist-sans);
 }
 
@@ -22,4 +27,8 @@ body {
 ::selection {
   background: #C86D7C;
   color: white;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
