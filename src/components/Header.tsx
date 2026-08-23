@@ -34,8 +34,8 @@ export function Header() {
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-rose-300 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-300/30 group-hover:shadow-rose-300/50 transition-all duration-300 group-hover:scale-110">
               <YarnBallIcon className="w-4 h-4 text-white" />
             </div>
-            <span className={`text-sm font-extrabold tracking-tight transition-colors duration-500 hidden sm:block ${scrolled ? "text-rose-text" : "text-white"}`}>
-              Tejidos a <span className={scrolled ? "text-rose-400" : "text-rose-200"}>Crochet</span>
+            <span className={`text-sm font-extrabold tracking-tight transition-colors duration-500 hidden sm:block ${scrolled ? "text-rose-text" : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"}`}>
+              Tejidos a <span className={scrolled ? "text-rose-400" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"}>Crochet</span>
             </span>
           </Link>
 
