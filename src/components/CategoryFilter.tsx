@@ -26,7 +26,7 @@ export function CategoryFilter() {
       } else {
         params.delete("cat");
       }
-      router.push(`/?${params.toString()}`);
+      router.replace(`/?${params.toString()}`, { scroll: false });
     },
     [router, searchParams]
   );
