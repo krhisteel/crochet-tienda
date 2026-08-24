@@ -35,7 +35,7 @@ export function Header() {
               : "bg-white/15 backdrop-blur-xl border border-white/20"
           }`}
         >
-          <Link href="/" className="flex items-center gap-2.5 pl-3 pr-4 group shrink-0">
+          <Link href="/admin" className="flex items-center gap-2.5 pl-3 pr-4 group shrink-0">
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-rose-300 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-300/30 group-hover:shadow-rose-300/50 transition-all duration-300 group-hover:scale-110">
               <YarnBallIcon className="w-4 h-4 text-white" />
             </div>
