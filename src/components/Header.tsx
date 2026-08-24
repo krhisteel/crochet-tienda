@@ -57,12 +57,6 @@ export function Header() {
             >
               Sobre Mí
             </Link>
-            <Link
-              href="/admin"
-              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${showSolid ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
-            >
-              Admin
-            </Link>
           </div>
 
           <div className="flex items-center gap-2 pr-1">
@@ -110,13 +104,6 @@ export function Header() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
               Sobre Mí
-            </Link>
-            <Link href="/admin" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-rose-text/70 hover:text-rose-400 hover:bg-rose-50 rounded-2xl transition-all">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0110 0v4" />
-              </svg>
-              Admin
             </Link>
             <div className="h-px bg-rose-200/20 my-1" />
             <a href="https://wa.me/56936621284" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-whatsapp hover:bg-rose-50 rounded-2xl transition-all">
