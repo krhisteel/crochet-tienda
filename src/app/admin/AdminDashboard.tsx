@@ -78,8 +78,7 @@ export function AdminDashboard() {
 
   function handleLogout() {
     localStorage.removeItem("admin-token");
-    setProducts([]);
-    setView("login");
+    window.location.href = "/";
   }
 
   async function toggleAvailable(product: Product) {
