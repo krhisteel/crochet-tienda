@@ -10,6 +10,7 @@ interface Product {
   title: string;
   description: string;
   price: number;
+  originalPrice: number | null;
   craftingTime: string;
   category: string;
   imageUrl: string | null;

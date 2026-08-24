@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { ProductActions } from "./ProductActions";
 import { ReviewsSection } from "@/components/ReviewsSection";
+import { RelatedProducts } from "@/components/RelatedProducts";
+import { SizeGuide } from "@/components/SizeGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -85,8 +87,15 @@ export default async function ProductPage({
             </div>
           </div>
 
-          <div className="text-4xl font-bold text-rose-text">
-            {formatPrice(product.price)}
+          <div className="inline-flex items-center gap-3 liquid-card rounded-2xl px-5 py-3.5 w-fit">
+            <div className="text-4xl font-bold text-rose-text">
+              {formatPrice(product.price)}
+              {product.originalPrice && product.originalPrice > product.price && (
+                <span className="text-lg text-rose-text/30 line-through ml-3">
+                  {formatPrice(product.originalPrice)}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="text-sm text-rose-text-light/60 leading-relaxed whitespace-pre-wrap">
@@ -99,6 +108,8 @@ export default async function ProductPage({
               price={formatPrice(product.price)}
             />
           </div>
+
+          {product.category === "Ropa" && <SizeGuide />}
 
           <div className="liquid-card rounded-2xl p-6">
             <h3 className="text-sm font-bold text-rose-text mb-4 flex items-center gap-2">
@@ -131,6 +142,8 @@ export default async function ProductPage({
       <div className="mt-16">
         <ReviewsSection productId={product.id} />
       </div>
+
+      <RelatedProducts currentId={product.id} category={product.category} />
     </div>
   );
 }

@@ -1,15 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { AdminLogin } from "./AdminLogin";
-import { PlusIcon, LogoutIcon, BoxIcon, TrashIcon } from "@/components/Icons";
+import { PlusIcon, LogoutIcon, BoxIcon, TrashIcon, PencilIcon } from "@/components/Icons";
 
 interface Product {
   id: string;
   title: string;
   category: string;
   price: number;
+  originalPrice: number | null;
   available: boolean;
   featured: boolean;
 }
@@ -37,6 +38,13 @@ export function AdminDashboard() {
   const [view, setView] = useState<"login" | "loading" | "dashboard" | "error">("login");
   const [errorMsg, setErrorMsg] = useState("");
   const alive = useRef(true);
+
+  const stats = useMemo(() => ({
+    total: products.length,
+    available: products.filter((p) => p.available).length,
+    featured: products.filter((p) => p.featured).length,
+    promotions: products.filter((p) => p.originalPrice && p.originalPrice > p.price).length,
+  }), [products]);
 
   useEffect(() => {
     return () => { alive.current = false; };
@@ -169,6 +177,24 @@ export function AdminDashboard() {
         </div>
       </div>
 
+      {products.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+          {[
+            { label: "Total", value: stats.total, color: "bg-rose-100 text-rose-500" },
+            { label: "Disponibles", value: stats.available, color: "bg-emerald-100 text-emerald-600" },
+            { label: "Destacados", value: stats.featured, color: "bg-amber-100 text-amber-600" },
+            { label: "En promo", value: stats.promotions, color: "bg-blue-100 text-blue-600" },
+          ].map((stat) => (
+            <div key={stat.label} className="liquid-card rounded-2xl p-4 text-center">
+              <div className={`w-10 h-10 mx-auto mb-2 rounded-xl ${stat.color} flex items-center justify-center text-lg font-bold`}>
+                {stat.value}
+              </div>
+              <p className="text-xs text-rose-text/40 font-semibold">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {products.length === 0 ? (
         <div className="text-center py-24 liquid-card rounded-3xl">
           <BoxIcon className="w-16 h-16 mx-auto mb-6 text-rose-200/40" />
@@ -200,7 +226,12 @@ export function AdminDashboard() {
                     <td className="px-6 py-5 hidden sm:table-cell">
                       <span className="text-[11px] font-bold text-rose-text/40 bg-rose-100 rounded-full px-3 py-1 uppercase tracking-wider">{p.category}</span>
                     </td>
-                    <td className="px-6 py-5 hidden sm:table-cell text-sm text-rose-text/60 font-semibold">{formatPrice(p.price)}</td>
+                    <td className="px-6 py-5 hidden sm:table-cell text-sm text-rose-text/60 font-semibold">
+                      {formatPrice(p.price)}
+                      {p.originalPrice && p.originalPrice > p.price && (
+                        <span className="text-xs text-rose-text/30 line-through ml-2">{formatPrice(p.originalPrice)}</span>
+                      )}
+                    </td>
                     <td className="px-6 py-5 hidden md:table-cell">
                       <button onClick={() => toggleAvailable(p)} className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-300 ${p.available ? "bg-rose-300/15 text-rose-500 hover:bg-rose-300/25" : "bg-rose-200/50 text-rose-400 hover:bg-rose-200"}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${p.available ? "bg-rose-400" : "bg-rose-300"}`} />
@@ -214,10 +245,16 @@ export function AdminDashboard() {
                       </button>
                     </td>
                     <td className="px-6 py-5 text-right">
-                      <button onClick={() => deleteProduct(p)} className="inline-flex items-center gap-1 text-danger/30 hover:text-danger text-xs font-semibold transition-colors duration-300">
-                        <TrashIcon className="w-3.5 h-3.5" />
-                        Eliminar
-                      </button>
+                      <div className="flex items-center justify-end gap-3">
+                        <Link href={`/admin/editar/${p.id}`} className="inline-flex items-center gap-1 text-rose-text/30 hover:text-rose-400 text-xs font-semibold transition-colors duration-300">
+                          <PencilIcon className="w-3.5 h-3.5" />
+                          Editar
+                        </Link>
+                        <button onClick={() => deleteProduct(p)} className="inline-flex items-center gap-1 text-danger/30 hover:text-danger text-xs font-semibold transition-colors duration-300">
+                          <TrashIcon className="w-3.5 h-3.5" />
+                          Eliminar
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

@@ -7,6 +7,7 @@ interface Product {
   title: string;
   description: string;
   price: number;
+  originalPrice: number | null;
   craftingTime: string;
   category: string;
   imageUrl: string | null;
@@ -101,9 +102,25 @@ export function ProductCard({ product }: { product: Product }) {
         </p>
 
         <div className="flex items-center justify-between pt-4 border-t border-rose-200/30">
-          <span className="text-xl font-bold text-rose-text">
-            {formatPrice(product.price)}
-          </span>
+          <div className="flex items-center gap-2">
+            {product.originalPrice && product.originalPrice > product.price ? (
+              <>
+                <span className="text-xl font-bold text-rose-text">
+                  {formatPrice(product.price)}
+                </span>
+                <span className="text-sm text-rose-text/30 line-through">
+                  {formatPrice(product.originalPrice)}
+                </span>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">
+                  -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                </span>
+              </>
+            ) : (
+              <span className="text-xl font-bold text-rose-text">
+                {formatPrice(product.price)}
+              </span>
+            )}
+          </div>
           <a
             href={whatsappLink(product)}
             target="_blank"

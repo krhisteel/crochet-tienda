@@ -6,16 +6,26 @@ import { UploadIcon, CheckIcon } from "@/components/Icons";
 
 interface ProductFormProps {
   action: (formData: FormData) => Promise<void>;
+  initialData?: {
+    title: string;
+    description: string;
+    price: number;
+    originalPrice: number | null;
+    craftingTime: string;
+    category: string;
+    imageUrl: string | null;
+  };
 }
 
 const categories = ["Amigurumis", "Ropa", "Accesorios", "Patrones", "Promociones"];
 
-export function ProductForm({ action }: ProductFormProps) {
+export function ProductForm({ action, initialData }: ProductFormProps) {
   const router = useRouter();
   const [uploading, setUploading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(initialData?.imageUrl || null);
   const [submitting, setSubmitting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const isEditing = !!initialData;
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -63,6 +73,7 @@ export function ProductForm({ action }: ProductFormProps) {
         <input
           name="title"
           required
+          defaultValue={initialData?.title}
           placeholder="Ej: Osito Amigurumi Tejido"
           className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
         />
@@ -76,6 +87,7 @@ export function ProductForm({ action }: ProductFormProps) {
           name="description"
           required
           rows={4}
+          defaultValue={initialData?.description}
           placeholder="Materiales, tamaño, detalles del tejido..."
           className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 resize-none transition-all duration-300"
         />
@@ -92,21 +104,38 @@ export function ProductForm({ action }: ProductFormProps) {
             step="1"
             min="0"
             required
+            defaultValue={initialData?.price}
             placeholder="0"
             className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
           />
         </div>
         <div>
           <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
-            Tiempo de confección
+            Precio original (CLP) — Opcional
           </label>
           <input
-            name="craftingTime"
-            required
-            placeholder="Ej: 3 a 5 días"
+            name="originalPrice"
+            type="number"
+            step="1"
+            min="0"
+            defaultValue={initialData?.originalPrice ?? ""}
+            placeholder="Dejar vacío si no hay promo"
             className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
           />
         </div>
+      </div>
+
+      <div>
+        <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+          Tiempo de confección
+        </label>
+        <input
+          name="craftingTime"
+          required
+          defaultValue={initialData?.craftingTime}
+          placeholder="Ej: 3 a 5 días"
+          className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+        />
       </div>
 
       <div>
@@ -116,6 +145,7 @@ export function ProductForm({ action }: ProductFormProps) {
         <select
           name="category"
           required
+          defaultValue={initialData?.category}
           className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300 appearance-none"
         >
           <option value="">Seleccionar categoría</option>
@@ -182,7 +212,7 @@ export function ProductForm({ action }: ProductFormProps) {
           disabled={submitting || uploading}
           className="flex-1 rounded-2xl bg-gradient-to-r from-rose-300 to-rose-400 text-white font-semibold py-3.5 hover:shadow-lg hover:shadow-rose-300/20 transition-all duration-300 disabled:opacity-40 text-sm"
         >
-          {submitting ? "Guardando..." : "Guardar Producto"}
+          {submitting ? "Guardando..." : isEditing ? "Guardar Cambios" : "Guardar Producto"}
         </button>
       </div>
     </form>

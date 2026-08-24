@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { Banner } from "@/components/Banner";
 import { ProductGrid } from "@/components/ProductGrid";
+import { FaqSection } from "@/components/FaqSection";
 
 export const dynamic = "force-dynamic";
 
@@ -68,6 +69,8 @@ export default async function HomePage({
           </a>
         </div>
       </section>
+
+      <FaqSection />
     </>
   );
 }
