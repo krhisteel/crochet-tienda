@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { ProductActions } from "./ProductActions";
+import { ReviewsSection } from "@/components/ReviewsSection";
 
 export const dynamic = "force-dynamic";
 
@@ -125,6 +126,10 @@ export default async function ProductPage({
             </ul>
           </div>
         </div>
+      </div>
+
+      <div className="mt-16">
+        <ReviewsSection productId={product.id} />
       </div>
     </div>
   );

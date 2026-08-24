@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
 import { FilterIcon } from "./Icons";
 
 const categories = [
@@ -13,24 +11,12 @@ const categories = [
   { label: "Promociones", value: "Promociones", icon: null },
 ];
 
-export function CategoryFilter() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const current = searchParams.get("cat") || "";
+interface CategoryFilterProps {
+  current: string;
+  onChange: (cat: string) => void;
+}
 
-  const setCategory = useCallback(
-    (cat: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (cat) {
-        params.set("cat", cat);
-      } else {
-        params.delete("cat");
-      }
-      router.replace(`/?${params.toString()}`, { scroll: false });
-    },
-    [router, searchParams]
-  );
-
+export function CategoryFilter({ current, onChange }: CategoryFilterProps) {
   return (
     <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
       {categories.map((c) => {
@@ -38,7 +24,7 @@ export function CategoryFilter() {
         return (
           <button
             key={c.value}
-            onClick={() => setCategory(c.value)}
+            onClick={() => onChange(c.value)}
             className={`flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
               isActive
                 ? "bg-gradient-to-r from-rose-300 to-rose-400 text-white shadow-lg shadow-rose-300/25"

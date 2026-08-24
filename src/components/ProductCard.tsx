@@ -65,13 +65,17 @@ export function ProductCard({ product }: { product: Product }) {
             )}
           </div>
 
-          {!product.available && (
-            <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4">
+            {product.available ? (
+              <span className="inline-flex items-center gap-1 bg-emerald-500/80 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
+                Disponible
+              </span>
+            ) : (
               <span className="inline-flex items-center bg-rose-500/60 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
                 Bajo Pedido
               </span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </Link>
 

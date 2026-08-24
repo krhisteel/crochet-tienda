@@ -1,8 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { ProductCard } from "@/components/ProductCard";
-import { CategoryFilter } from "@/components/CategoryFilter";
 import { Banner } from "@/components/Banner";
-import { Suspense } from "react";
+import { ProductGrid } from "@/components/ProductGrid";
 
 export const dynamic = "force-dynamic";
 
@@ -39,44 +37,7 @@ export default async function HomePage({
           </p>
         </div>
 
-        <div className="flex justify-center mb-10">
-          <Suspense>
-            <CategoryFilter />
-          </Suspense>
-        </div>
-
-        <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-rose-text/30 font-medium">
-            {products.length} producto{products.length !== 1 ? "s" : ""} encontrado{products.length !== 1 ? "s" : ""}
-          </p>
-        </div>
-
-        {products.length === 0 ? (
-          <div className="text-center py-24 liquid-card rounded-3xl">
-            <svg className="w-16 h-16 mx-auto mb-6 text-rose-200/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
-              <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
-              <path d="M8 17c1 1 2.5 1.5 4 1.5s3-.5 4-1.5" />
-            </svg>
-            <h3 className="text-xl font-bold text-rose-text mb-2">
-              {params.cat ? "Sin resultados" : "Catálogo vacío"}
-            </h3>
-            <p className="text-sm text-rose-text/40 max-w-sm mx-auto">
-              {params.cat
-                ? "No hay productos en esta categoría. Probá con otra."
-                : "Pronto agregaremos nuevos tejidos artesanales."}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {products.map((product, i) => (
-              <div key={product.id} className={`fade-in-up stagger-${Math.min(i + 1, 6)}`}>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        )}
+        <ProductGrid products={products} initialCategory={params.cat || ""} />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-16 sm:pb-24">
