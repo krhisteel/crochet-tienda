@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { YarnBallIcon, MenuIcon, XIcon, WhatsAppIcon } from "./Icons";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -14,18 +17,20 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const showSolid = scrolled || !isHome;
+
   return (
     <>
       <header
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
-          scrolled
+          showSolid
             ? "w-[calc(100%-2rem)] max-w-4xl"
             : "w-[calc(100%-2rem)] max-w-5xl"
         }`}
       >
         <nav
           className={`flex items-center justify-between gap-4 px-2 py-2 rounded-full transition-all duration-500 ${
-            scrolled
+            showSolid
               ? "bg-white/80 backdrop-blur-2xl shadow-xl shadow-rose-300/15 border border-rose-200/30"
               : "bg-white/15 backdrop-blur-xl border border-white/20"
           }`}
@@ -34,21 +39,21 @@ export function Header() {
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-rose-300 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-300/30 group-hover:shadow-rose-300/50 transition-all duration-300 group-hover:scale-110">
               <YarnBallIcon className="w-4 h-4 text-white" />
             </div>
-            <span className={`text-sm font-extrabold tracking-tight transition-colors duration-500 hidden sm:block ${scrolled ? "text-rose-text" : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"}`}>
-              Tejidos a <span className={scrolled ? "text-rose-400" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"}>Crochet</span>
+            <span className={`text-sm font-extrabold tracking-tight transition-colors duration-500 hidden sm:block ${showSolid ? "text-rose-text" : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"}`}>
+              Tejidos a <span className={showSolid ? "text-rose-400" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"}>Crochet</span>
             </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
             <Link
               href="/"
-              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${scrolled ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
+              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${showSolid ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
               Catálogo
             </Link>
             <Link
               href="/admin"
-              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${scrolled ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
+              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${showSolid ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
               Admin
             </Link>
@@ -60,7 +65,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className={`hidden sm:inline-flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-full transition-all duration-300 ${
-                scrolled
+                showSolid
                   ? "bg-whatsapp text-white hover:bg-whatsapp-hover shadow-sm hover:shadow-lg hover:shadow-whatsapp/20"
                   : "bg-white/20 text-white hover:bg-white/30 border border-white/20"
               }`}
@@ -72,7 +77,7 @@ export function Header() {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className={`md:hidden p-2.5 rounded-full transition-all duration-300 ${
-                scrolled
+                showSolid
                   ? "bg-rose-100/50 text-rose-text hover:bg-rose-100"
                   : "bg-white/10 text-white hover:bg-white/20"
               }`}
