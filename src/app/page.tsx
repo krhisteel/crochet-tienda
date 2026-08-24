@@ -25,6 +25,20 @@ export default async function HomePage({
     <>
       <Banner />
 
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 -mt-6 relative z-10">
+        <div className="liquid-card rounded-2xl px-6 py-4 flex items-center justify-center gap-3 text-sm">
+          <svg className="w-5 h-5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="1" y="3" width="15" height="13" />
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+            <circle cx="5.5" cy="18.5" r="2.5" />
+            <circle cx="18.5" cy="18.5" r="2.5" />
+          </svg>
+          <span className="text-rose-text/60">
+            <span className="font-bold text-rose-text">Envío gratis</span> en compras sobre $30.000
+          </span>
+        </div>
+      </div>
+
       <section id="catalogo" className="relative mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24">
         <div className="text-center mb-12">
           <span className="inline-flex items-center gap-2 text-xs font-semibold text-rose-400 bg-rose-100 rounded-full px-4 py-1.5 uppercase tracking-widest mb-4">

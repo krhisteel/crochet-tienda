@@ -15,6 +15,11 @@ interface Product {
   craftingTime: string;
   category: string;
   imageUrl: string | null;
+  materials: string | null;
+  dimensions: string | null;
+  colors: string | null;
+  weight: string | null;
+  shippingTime: string | null;
 }
 
 export default function EditProductPage({
@@ -59,6 +64,11 @@ export default function EditProductPage({
         craftingTime: formData.get("craftingTime"),
         category: formData.get("category"),
         imageUrl: formData.get("imageUrl"),
+        materials: formData.get("materials") || null,
+        dimensions: formData.get("dimensions") || null,
+        colors: formData.get("colors") || null,
+        weight: formData.get("weight") || null,
+        shippingTime: formData.get("shippingTime") || null,
       }),
     });
     if (res.ok) {

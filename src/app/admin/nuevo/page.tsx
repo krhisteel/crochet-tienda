@@ -9,18 +9,30 @@ export default function NewProductPage() {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const price = parseFloat(formData.get("price") as string);
+    const originalPrice = formData.get("originalPrice") ? parseFloat(formData.get("originalPrice") as string) : null;
     const craftingTime = formData.get("craftingTime") as string;
     const category = formData.get("category") as string;
     const imageUrl = formData.get("imageUrl") as string | null;
+    const materials = formData.get("materials") as string | null;
+    const dimensions = formData.get("dimensions") as string | null;
+    const colors = formData.get("colors") as string | null;
+    const weight = formData.get("weight") as string | null;
+    const shippingTime = formData.get("shippingTime") as string | null;
 
     await prisma.product.create({
       data: {
         title,
         description,
         price,
+        originalPrice,
         craftingTime,
         category,
         imageUrl: imageUrl || null,
+        materials: materials || null,
+        dimensions: dimensions || null,
+        colors: colors || null,
+        weight: weight || null,
+        shippingTime: shippingTime || null,
       },
     });
 

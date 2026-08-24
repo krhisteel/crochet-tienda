@@ -14,6 +14,11 @@ interface ProductFormProps {
     craftingTime: string;
     category: string;
     imageUrl: string | null;
+    materials: string | null;
+    dimensions: string | null;
+    colors: string | null;
+    weight: string | null;
+    shippingTime: string | null;
   };
 }
 
@@ -153,6 +158,74 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
+      </div>
+
+      <div className="border-t border-rose-200/20 pt-6">
+        <h3 className="text-xs font-bold text-rose-text/30 uppercase tracking-widest mb-4">Detalles del producto (opcional)</h3>
+        
+        <div className="space-y-5">
+          <div>
+            <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+              Materiales
+            </label>
+            <input
+              name="materials"
+              defaultValue={initialData?.materials ?? ""}
+              placeholder="Ej: Lana acrílica, ojos de seguridad"
+              className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+                Dimensiones
+              </label>
+              <input
+                name="dimensions"
+                defaultValue={initialData?.dimensions ?? ""}
+                placeholder="Ej: 15cm de alto"
+                className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+                Peso
+              </label>
+              <input
+                name="weight"
+                defaultValue={initialData?.weight ?? ""}
+                placeholder="Ej: 200g"
+                className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+                Colores disponibles
+              </label>
+              <input
+                name="colors"
+                defaultValue={initialData?.colors ?? ""}
+                placeholder="Ej: Rosa, blanco, beige"
+                className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+              />
+            </div>
+            <div>
+              <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+                Tiempo de envío
+              </label>
+              <input
+                name="shippingTime"
+                defaultValue={initialData?.shippingTime ?? ""}
+                placeholder="Ej: 3-5 días hábiles"
+                className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       <div>

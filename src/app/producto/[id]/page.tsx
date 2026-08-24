@@ -102,6 +102,53 @@ export default async function ProductPage({
             {product.description}
           </div>
 
+          {(product.materials || product.dimensions || product.colors || product.weight || product.shippingTime) && (
+            <div className="liquid-card rounded-2xl p-6">
+              <h3 className="text-sm font-bold text-rose-text mb-4 flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                </div>
+                Detalles del producto
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {product.materials && (
+                  <div>
+                    <p className="text-[10px] text-rose-text/30 font-semibold uppercase tracking-wider mb-1">Materiales</p>
+                    <p className="text-sm text-rose-text/60">{product.materials}</p>
+                  </div>
+                )}
+                {product.dimensions && (
+                  <div>
+                    <p className="text-[10px] text-rose-text/30 font-semibold uppercase tracking-wider mb-1">Dimensiones</p>
+                    <p className="text-sm text-rose-text/60">{product.dimensions}</p>
+                  </div>
+                )}
+                {product.colors && (
+                  <div>
+                    <p className="text-[10px] text-rose-text/30 font-semibold uppercase tracking-wider mb-1">Colores</p>
+                    <p className="text-sm text-rose-text/60">{product.colors}</p>
+                  </div>
+                )}
+                {product.weight && (
+                  <div>
+                    <p className="text-[10px] text-rose-text/30 font-semibold uppercase tracking-wider mb-1">Peso</p>
+                    <p className="text-sm text-rose-text/60">{product.weight}</p>
+                  </div>
+                )}
+                {product.shippingTime && (
+                  <div className="col-span-2">
+                    <p className="text-[10px] text-rose-text/30 font-semibold uppercase tracking-wider mb-1">Tiempo de envío</p>
+                    <p className="text-sm text-rose-text/60">{product.shippingTime}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="pt-2">
             <ProductActions
               title={product.title}
