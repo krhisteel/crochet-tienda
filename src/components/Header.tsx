@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { YarnBallIcon, MenuIcon, XIcon, WhatsAppIcon } from "./Icons";
 import { CartButton } from "./CartButton";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,6 +14,7 @@ export function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const { setIsOpen } = useCart();
+  const { count: wishlistCount } = useWishlist();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -55,6 +57,12 @@ export function Header() {
               Catálogo
             </Link>
             <Link
+              href="/favoritos"
+              className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${showSolid ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
+            >
+              Favoritos
+            </Link>
+            <Link
               href="/sobre-mi"
               className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 ${showSolid ? "text-rose-text/60 hover:text-rose-400 hover:bg-rose-100/50" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
@@ -64,6 +72,24 @@ export function Header() {
 
           <div className="flex items-center gap-2 pr-1">
             <CartButton solid={showSolid} />
+            <Link
+              href="/favoritos"
+              className={`relative p-2.5 rounded-full transition-all duration-300 ${
+                showSolid
+                  ? "bg-rose-100/50 text-rose-text hover:bg-rose-100"
+                  : "bg-white/10 text-white hover:bg-white/20"
+              }`}
+              aria-label="Favoritos"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+              </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-md">
+                  {wishlistCount > 99 ? "99+" : wishlistCount}
+                </span>
+              )}
+            </Link>
             <a
               href="https://wa.me/56936621284"
               target="_blank"
@@ -108,6 +134,12 @@ export function Header() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
               Sobre Mí
+            </Link>
+            <Link href="/favoritos" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-rose-text/70 hover:text-rose-400 hover:bg-rose-50 rounded-2xl transition-all">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+              </svg>
+              Favoritos {wishlistCount > 0 && `(${wishlistCount})`}
             </Link>
             <div className="h-px bg-rose-200/20 my-1" />
             <button

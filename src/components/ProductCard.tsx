@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ClockIcon, WhatsAppIcon } from "./Icons";
 import { AddToCartButton } from "./AddToCartButton";
+import { WishlistButton } from "./WishlistButton";
 
 interface Product {
   id: string;
@@ -107,9 +108,6 @@ export function ProductCard({ product }: { product: Product }) {
                 <StarIcon /> Destacado
               </span>
             )}
-          </div>
-
-          <div className="absolute top-4 right-4">
             {product.available ? (
               <span className="inline-flex items-center gap-1 bg-emerald-500/80 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
                 Disponible
@@ -120,6 +118,8 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             )}
           </div>
+
+          <WishlistButton productId={product.id} />
         </div>
       </Link>
 
