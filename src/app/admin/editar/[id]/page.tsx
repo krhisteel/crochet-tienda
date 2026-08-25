@@ -15,6 +15,7 @@ interface Product {
   craftingTime: string;
   category: string;
   imageUrl: string | null;
+  images: string | null;
   materials: string | null;
   dimensions: string | null;
   colors: string | null;
@@ -64,6 +65,7 @@ export default function EditProductPage({
         craftingTime: formData.get("craftingTime"),
         category: formData.get("category"),
         imageUrl: formData.get("imageUrl"),
+        images: formData.get("images") || null,
         materials: formData.get("materials") || null,
         dimensions: formData.get("dimensions") || null,
         colors: formData.get("colors") || null,

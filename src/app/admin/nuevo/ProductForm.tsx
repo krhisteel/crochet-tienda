@@ -14,6 +14,7 @@ interface ProductFormProps {
     craftingTime: string;
     category: string;
     imageUrl: string | null;
+    images: string | null;
     materials: string | null;
     dimensions: string | null;
     colors: string | null;
@@ -28,8 +29,15 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
   const router = useRouter();
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(initialData?.imageUrl || null);
+  const [galleryImages, setGalleryImages] = useState<string[]>(() => {
+    if (initialData?.images) {
+      try { return JSON.parse(initialData.images); } catch { return []; }
+    }
+    return [];
+  });
   const [submitting, setSubmitting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const galleryRef = useRef<HTMLInputElement>(null);
   const isEditing = !!initialData;
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -58,6 +66,30 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
     }
   }
 
+  async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files?.length) return;
+
+    setUploading(true);
+    for (const file of Array.from(files)) {
+      const fd = new FormData();
+      fd.append("file", file);
+      try {
+        const res = await fetch("/api/upload", { method: "POST", body: fd });
+        const data = await res.json();
+        if (data.url) {
+          setGalleryImages((prev) => [...prev, data.url]);
+        }
+      } catch {}
+    }
+    setUploading(false);
+    if (galleryRef.current) galleryRef.current.value = "";
+  }
+
+  function removeGalleryImage(index: number) {
+    setGalleryImages((prev) => prev.filter((_, i) => i !== index));
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
@@ -66,6 +98,7 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
     if (imageUrl) {
       fd.set("imageUrl", imageUrl);
     }
+    fd.set("images", JSON.stringify(galleryImages));
     await action(fd);
   }
 
@@ -270,6 +303,47 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
           )}
         </button>
         {imageUrl && <input type="hidden" name="imageUrl" value={imageUrl} />}
+      </div>
+
+      <div>
+        <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+          Galería de imágenes (opcional)
+        </label>
+        <input
+          ref={galleryRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          multiple
+          onChange={handleGalleryUpload}
+          className="hidden"
+        />
+        <button
+          type="button"
+          onClick={() => galleryRef.current?.click()}
+          disabled={uploading}
+          className="w-full rounded-2xl border-2 border-dashed border-rose-200/40 bg-white px-5 py-6 text-center hover:border-rose-300/40 hover:bg-rose-50 transition-all duration-300 disabled:opacity-50"
+        >
+          <span className="text-sm text-rose-text/30 font-medium">
+            {uploading ? "Subiendo..." : "Click para agregar más fotos"}
+          </span>
+        </button>
+        {galleryImages.length > 0 && (
+          <div className="flex gap-3 mt-3 flex-wrap">
+            {galleryImages.map((url, i) => (
+              <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden border border-rose-200/30 group">
+                <img src={url} alt="" className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeGalleryImage(i)}
+                  className="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500/80 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <input type="hidden" name="images" value={JSON.stringify(galleryImages)} />
       </div>
 
       <div className="flex gap-3 pt-2">

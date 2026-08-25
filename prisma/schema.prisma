@@ -16,6 +16,7 @@ model Product {
   craftingTime  String   @map("crafting_time")
   category      String
   imageUrl      String?  @map("image_url")
+  images        String?  @db.Text
   materials     String?
   dimensions    String?
   colors        String?

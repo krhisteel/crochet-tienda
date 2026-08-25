@@ -13,6 +13,7 @@ export default function NewProductPage() {
     const craftingTime = formData.get("craftingTime") as string;
     const category = formData.get("category") as string;
     const imageUrl = formData.get("imageUrl") as string | null;
+    const images = formData.get("images") as string | null;
     const materials = formData.get("materials") as string | null;
     const dimensions = formData.get("dimensions") as string | null;
     const colors = formData.get("colors") as string | null;
@@ -28,6 +29,7 @@ export default function NewProductPage() {
         craftingTime,
         category,
         imageUrl: imageUrl || null,
+        images: images || null,
         materials: materials || null,
         dimensions: dimensions || null,
         colors: colors || null,

@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { ProductActions } from "./ProductActions";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { SizeGuide } from "@/components/SizeGuide";
+import { ImageGallery } from "@/components/ImageGallery";
 
 export const dynamic = "force-dynamic";
 
@@ -34,29 +34,11 @@ export default async function ProductPage({
       </nav>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-        <div className="relative aspect-square rounded-[2rem] overflow-hidden liquid-card p-2">
-          <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden">
-            {product.imageUrl ? (
-              <Image
-                src={product.imageUrl}
-                alt={product.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full bg-gradient-to-br from-rose-100 via-rose-50 to-cream">
-                <svg className="w-24 h-24 opacity-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
-                  <path d="M7 13c1.5 1.5 3 2.5 5 2.5s3.5-1 5-2.5" />
-                  <path d="M8 17c1 1 2.5 1.5 4 1.5s3-.5 4-1.5" />
-                </svg>
-              </div>
-            )}
-          </div>
-        </div>
+        <ImageGallery
+          mainImage={product.imageUrl}
+          images={product.images}
+          title={product.title}
+        />
 
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap items-center gap-2">
