@@ -52,14 +52,16 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
       fd.append("file", file);
       try {
         const res = await fetch("/api/upload", { method: "POST", body: fd });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.url) {
-            setGalleryImages((prev) => [...prev, data.url]);
-          }
+        const data = await res.json();
+        if (res.ok && data.url) {
+          setGalleryImages((prev) => [...prev, data.url]);
+        } else {
+          alert(`Error subiendo "${file.name}": ${data.error || "Error desconocido"}`);
         }
-      } catch {}
-      await new Promise((r) => setTimeout(r, 500));
+      } catch (err) {
+        alert(`Error de conexión subiendo "${file.name}"`);
+      }
+      await new Promise((r) => setTimeout(r, 1000));
     }
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
