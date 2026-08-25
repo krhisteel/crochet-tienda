@@ -9,12 +9,31 @@ interface AdminLoginProps {
 
 export function AdminLogin({ onLogin }: AdminLoginProps) {
   const [token, setToken] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (token.trim()) {
-      localStorage.setItem("admin-token", token.trim());
-      onLogin();
+    if (!token.trim()) return;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/products", {
+        headers: { "x-admin-token": token.trim() },
+      });
+
+      if (res.ok) {
+        localStorage.setItem("admin-token", token.trim());
+        onLogin();
+      } else {
+        setError("Token incorrecto. Intentá de nuevo.");
+      }
+    } catch {
+      setError("Error de conexión. Intentá de nuevo.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -34,15 +53,19 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
           <input
             type="password"
             value={token}
-            onChange={(e) => setToken(e.target.value)}
+            onChange={(e) => { setToken(e.target.value); setError(""); }}
             placeholder="Token de administrador"
             className="w-full rounded-2xl border border-rose-200/50 bg-white px-5 py-4 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/30 focus:border-rose-300 text-center transition-all duration-300"
           />
+          {error && (
+            <p className="text-sm text-red-500 text-center">{error}</p>
+          )}
           <button
             type="submit"
-            className="w-full rounded-2xl bg-gradient-to-r from-rose-300 to-rose-400 text-white font-semibold py-4 hover:shadow-lg hover:shadow-rose-300/20 transition-all duration-300 text-sm"
+            disabled={loading || !token.trim()}
+            className="w-full rounded-2xl bg-gradient-to-r from-rose-300 to-rose-400 text-white font-semibold py-4 hover:shadow-lg hover:shadow-rose-300/20 transition-all duration-300 text-sm disabled:opacity-50"
           >
-            Entrar
+            {loading ? "Verificando..." : "Entrar"}
           </button>
         </form>
       </div>
