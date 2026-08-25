@@ -77,13 +77,17 @@ export function Banner() {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            <Link
+            <a
               href="#catalogo"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
+              }}
               className="group inline-flex items-center justify-center gap-3 bg-white text-rose-500 font-bold px-10 py-4 rounded-full transition-all duration-300 shadow-2xl shadow-rose-500/20 hover:shadow-rose-400/30 hover:-translate-y-1"
             >
               Explorar Catálogo
               <ChevronDownIcon className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
-            </Link>
+            </a>
             <Link
               href="https://wa.me/56936621284"
               target="_blank"
