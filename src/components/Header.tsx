@@ -40,7 +40,7 @@ export function Header() {
               <YarnBallIcon className="w-4 h-4 text-white" />
             </div>
             <span className={`text-sm font-extrabold tracking-tight transition-colors duration-500 hidden sm:block ${showSolid ? "text-rose-text" : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"}`}>
-              Tejidos a <span className={showSolid ? "text-rose-400" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"}>Crochet</span>
+              <span className={showSolid ? "text-rose-400" : "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"}>Mundito</span> Amigurumi
             </span>
           </Link>
 

@@ -17,7 +17,7 @@ export function Banner() {
       <div className="absolute inset-0">
         <Image
           src="/hero.png"
-          alt="Tejidos a crochet artesanales"
+            alt="Amigurumis artesanales de Mundito Amigurumi"
           fill
           className="object-cover"
           priority
@@ -43,24 +43,9 @@ export function Banner() {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            Tejidos a
+            Amigurumis que
             <br />
-            crochet que
-            <br />
-            <span className="relative inline-block">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-100 to-white">
-                enamoran
-              </span>
-              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
-                <path d="M2 8 Q50 2 100 7 Q150 12 198 4" stroke="url(#ug)" strokeWidth="3" strokeLinecap="round" className="thread-path" />
-                <defs>
-                  <linearGradient id="ug" x1="0" y1="0" x2="200" y2="0">
-                    <stop offset="0%" stopColor="#FBD5DE" />
-                    <stop offset="100%" stopColor="white" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </span>
+            enamoran
           </h1>
 
           <p

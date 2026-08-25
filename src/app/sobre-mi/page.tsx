@@ -3,7 +3,7 @@ import Link from "next/link";
 import { WhatsAppIcon, YarnBallIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Sobre Mí — Tejidos a Crochet",
+  title: "Sobre Mí — Mundito Amigurumi",
   description:
     "Conocé a quien está detrás de cada tejido hecho a mano con amor y dedicación.",
 };

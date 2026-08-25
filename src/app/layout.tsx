@@ -12,23 +12,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Tejidos a Crochet | Artesanías Hechas a Mano",
+  title: "Mundito Amigurumi | Artesanías Hechas a Mano",
   description:
-    "Tienda artesanal de productos tejidos a crochet: amigurumis, ropa, accesorios y patrones digitales. Cada pieza es única y hecha con amor.",
+    "Tienda artesanal de amigurumis, ropa, accesorios y patrones digitales tejidos a mano. Cada pieza es única y hecha con amor.",
   keywords: ["crochet", "amigurumi", "tejidos a mano", "ropa tejida", "patrones crochet"],
   openGraph: {
-    title: "Tejidos a Crochet | Artesanías Hechas a Mano",
+    title: "Mundito Amigurumi | Artesanías Hechas a Mano",
     description:
-      "Tienda artesanal de productos tejidos a crochet: amigurumis, ropa, accesorios y patrones digitales.",
+      "Tienda artesanal de amigurumis, ropa, accesorios y patrones digitales tejidos a mano.",
     type: "website",
     locale: "es_CL",
-    siteName: "Tejidos a Crochet",
+    siteName: "Mundito Amigurumi",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tejidos a Crochet | Artesanías Hechas a Mano",
+    title: "Mundito Amigurumi | Artesanías Hechas a Mano",
     description:
-      "Tienda artesanal de productos tejidos a crochet: amigurumis, ropa, accesorios y patrones digitales.",
+      "Tienda artesanal de amigurumis, ropa, accesorios y patrones digitales tejidos a mano.",
   },
 };
 
