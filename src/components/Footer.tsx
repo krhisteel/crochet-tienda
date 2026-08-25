@@ -37,7 +37,7 @@ export function Footer() {
                 Productos artesanales de calidad premium.
               </p>
               <div className="flex gap-3">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 transition-all duration-300">
+                <a href="https://www.instagram.com/munditoamigurumi/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 transition-all duration-300">
                   <InstagramIcon className="w-5 h-5" />
                 </a>
                 <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 transition-all duration-300">
