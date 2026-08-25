@@ -52,7 +52,8 @@ export function Footer() {
             <div>
               <h3 className="text-white font-bold text-xs uppercase tracking-widest mb-5">Navegación</h3>
               <ul className="space-y-3">
-                <li><a href="/" className="text-white/40 hover:text-white text-sm transition-colors duration-300">Catálogo</a></li>
+                <li><a href="/#catalogo" className="text-white/40 hover:text-white text-sm transition-colors duration-300">Catálogo</a></li>
+                <li><a href="/favoritos" className="text-white/40 hover:text-white text-sm transition-colors duration-300">Favoritos</a></li>
                 <li><a href="/sobre-mi" className="text-white/40 hover:text-white text-sm transition-colors duration-300">Sobre Mí</a></li>
               </ul>
             </div>
