@@ -3,7 +3,6 @@ import { Banner } from "@/components/Banner";
 import { ProductGrid } from "@/components/ProductGrid";
 import { FaqSection } from "@/components/FaqSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
-import { InstagramSection } from "@/components/InstagramSection";
 
 export const dynamic = "force-dynamic";
 
@@ -89,8 +88,6 @@ export default async function HomePage({
       <FaqSection />
 
       <TestimonialsSection />
-
-      <InstagramSection />
     </>
   );
 }
