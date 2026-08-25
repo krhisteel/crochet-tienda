@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useState, useRef, FormEvent } from "react";
 import { UploadIcon } from "@/components/Icons";
-import { upload } from "@vercel/blob/client";
 
 interface ProductFormProps {
   action: (formData: FormData) => Promise<void>;
@@ -49,17 +48,16 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
 
     setUploading(true);
     for (const file of Array.from(files)) {
+      const fd = new FormData();
+      fd.append("file", file);
       try {
-        const result = await upload(file.name, file, {
-          access: "public",
-          handleUploadUrl: "/api/upload",
-        });
-        setGalleryImages((prev) => [...prev, result.url]);
-      } catch (err) {
-        console.error("Upload error:", err);
-        alert(`Error subiendo: ${file.name}`);
-      }
-      await new Promise((r) => setTimeout(r, 500));
+        const res = await fetch("/api/upload", { method: "POST", body: fd });
+        const data = await res.json();
+        if (res.ok && data.url) {
+          setGalleryImages((prev) => [...prev, data.url]);
+        }
+      } catch {}
+      await new Promise((r) => setTimeout(r, 1500));
     }
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
