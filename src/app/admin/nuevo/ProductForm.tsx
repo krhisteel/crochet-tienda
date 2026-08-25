@@ -48,20 +48,22 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
 
     setUploading(true);
     for (const file of Array.from(files)) {
-      const fd = new FormData();
-      fd.append("file", file);
-      try {
-        const res = await fetch("/api/upload", { method: "POST", body: fd });
-        const data = await res.json();
-        if (res.ok && data.url) {
-          setGalleryImages((prev) => [...prev, data.url]);
-        } else {
-          alert(`Error subiendo "${file.name}": ${data.error || "Error desconocido"}`);
-        }
-      } catch (err) {
-        alert(`Error de conexión subiendo "${file.name}"`);
+      let ok = false;
+      for (let attempt = 0; attempt < 3 && !ok; attempt++) {
+        if (attempt > 0) await new Promise((r) => setTimeout(r, 3000));
+        const fd = new FormData();
+        fd.append("file", file);
+        try {
+          const res = await fetch("/api/upload", { method: "POST", body: fd });
+          const data = await res.json();
+          if (res.ok && data.url) {
+            setGalleryImages((prev) => [...prev, data.url]);
+            ok = true;
+          }
+        } catch {}
       }
-      await new Promise((r) => setTimeout(r, 1000));
+      if (!ok) alert(`No se pudo subir: ${file.name}`);
+      await new Promise((r) => setTimeout(r, 2000));
     }
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
