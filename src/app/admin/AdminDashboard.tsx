@@ -22,11 +22,11 @@ function formatPrice(price: number) {
   }).format(price);
 }
 
-async function fetchWithTimeout(url: string, ms = 15000): Promise<Response> {
+async function fetchWithTimeout(url: string, ms = 15000, options?: RequestInit): Promise<Response> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), ms);
   try {
-    const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+    const res = await fetch(url, { cache: "no-store", signal: controller.signal, ...options });
     return res;
   } finally {
     clearTimeout(timeout);
@@ -59,8 +59,16 @@ export function AdminDashboard() {
 
   async function loadProducts() {
     setView("loading");
+    const t = localStorage.getItem("admin-token") || "";
     try {
-      const res = await fetchWithTimeout("/api/products", 15000);
+      const res = await fetchWithTimeout("/api/products?admin=true", 15000, {
+        headers: { "x-admin-token": t },
+      });
+      if (res.status === 401) {
+        localStorage.removeItem("admin-token");
+        if (alive.current) setView("login");
+        return;
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       if (!Array.isArray(data)) throw new Error("Respuesta inválida");
