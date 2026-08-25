@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ClockIcon, WhatsAppIcon } from "./Icons";
+import { AddToCartButton } from "./AddToCartButton";
 
 interface Product {
   id: string;
@@ -164,15 +165,21 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             )}
           </div>
-          <a
-            href={whatsappLink(product)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-whatsapp text-white text-xs font-semibold px-4 py-2.5 hover:bg-whatsapp-hover transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-whatsapp/20 hover:-translate-y-0.5"
-          >
-            <WhatsAppIcon className="w-3.5 h-3.5" />
-            Pedir
-          </a>
+          <div className="flex items-center gap-2">
+            <AddToCartButton
+              product={{ id: product.id, title: product.title, price: product.price, imageUrl: product.imageUrl }}
+              available={product.available}
+            />
+            <a
+              href={whatsappLink(product)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-whatsapp text-white text-xs font-semibold px-4 py-2.5 hover:bg-whatsapp-hover transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-whatsapp/20 hover:-translate-y-0.5"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5" />
+              Pedir
+            </a>
+          </div>
         </div>
       </div>
     </div>

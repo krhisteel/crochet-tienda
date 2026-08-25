@@ -4,12 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { YarnBallIcon, MenuIcon, XIcon, WhatsAppIcon } from "./Icons";
+import { CartButton } from "./CartButton";
+import { useCart } from "@/context/CartContext";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const { setIsOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -60,6 +63,7 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-2 pr-1">
+            <CartButton solid={showSolid} />
             <a
               href="https://wa.me/56936621284"
               target="_blank"
@@ -106,6 +110,17 @@ export function Header() {
               Sobre Mí
             </Link>
             <div className="h-px bg-rose-200/20 my-1" />
+            <button
+              onClick={() => { setMenuOpen(false); setIsOpen(true); }}
+              className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-rose-text/70 hover:text-rose-400 hover:bg-rose-50 rounded-2xl transition-all w-full"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+              </svg>
+              Mi Carrito
+            </button>
             <a href="https://wa.me/56936621284" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-sm font-bold text-whatsapp hover:bg-rose-50 rounded-2xl transition-all">
               <WhatsAppIcon className="w-4 h-4" />
               WhatsApp
