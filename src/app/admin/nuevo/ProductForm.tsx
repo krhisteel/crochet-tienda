@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useRef, FormEvent } from "react";
-import { UploadIcon, CheckIcon } from "@/components/Icons";
+import { UploadIcon } from "@/components/Icons";
 
 interface ProductFormProps {
   action: (formData: FormData) => Promise<void>;
@@ -31,42 +31,18 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
   const [imageUrl, setImageUrl] = useState<string | null>(initialData?.imageUrl || null);
   const [galleryImages, setGalleryImages] = useState<string[]>(() => {
     if (initialData?.images) {
-      try { return JSON.parse(initialData.images); } catch { return []; }
+      try {
+        const parsed = JSON.parse(initialData.images);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch { return []; }
     }
     return [];
   });
   const [submitting, setSubmitting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
-  const galleryRef = useRef<HTMLInputElement>(null);
   const isEditing = !!initialData;
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    const fd = new FormData();
-    fd.append("file", file);
-
-    try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: fd,
-      });
-      const data = await res.json();
-      if (data.url) {
-        setImageUrl(data.url);
-      } else {
-        alert(data.error || "Error al subir la imagen");
-      }
-    } catch {
-      alert("Error al subir la imagen");
-    } finally {
-      setUploading(false);
-    }
-  }
-
-  async function handleGalleryUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
     if (!files?.length) return;
 
@@ -83,11 +59,20 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
       } catch {}
     }
     setUploading(false);
-    if (galleryRef.current) galleryRef.current.value = "";
+    if (fileRef.current) fileRef.current.value = "";
   }
 
-  function removeGalleryImage(index: number) {
+  function removeImage(index: number) {
     setGalleryImages((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function setAsMain(index: number) {
+    setGalleryImages((prev) => {
+      const newGallery = [...prev];
+      const mainImg = newGallery.splice(index, 1)[0];
+      setImageUrl(mainImg);
+      return newGallery;
+    });
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -97,8 +82,12 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
     const fd = new FormData(form);
     if (imageUrl) {
       fd.set("imageUrl", imageUrl);
+    } else if (galleryImages.length > 0) {
+      fd.set("imageUrl", galleryImages[0]);
+      fd.set("images", JSON.stringify(galleryImages.slice(1)));
+    } else {
+      fd.set("images", JSON.stringify([]));
     }
-    fd.set("images", JSON.stringify(galleryImages));
     await action(fd);
   }
 
@@ -263,12 +252,13 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
 
       <div>
         <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
-          Foto del producto
+          Fotos del producto
         </label>
         <input
           ref={fileRef}
           type="file"
           accept="image/jpeg,image/png,image/webp,image/gif"
+          multiple
           onChange={handleUpload}
           className="hidden"
         />
@@ -280,61 +270,49 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
         >
           {uploading ? (
             <div className="flex flex-col items-center gap-3">
-              <svg className="w-8 h-8 text-rose-300/40 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-8 h-8 text-rose-300/40 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <circle cx="12" cy="12" r="10" />
                 <path d="M6.5 8.5c1.5 2 3.5 3 5.5 3s4-1 5.5-3" />
               </svg>
-              <span className="text-sm text-rose-text/40 font-medium">Subiendo imagen...</span>
-            </div>
-          ) : imageUrl ? (
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center">
-                <CheckIcon className="w-6 h-6 text-rose-500" />
-              </div>
-              <span className="text-sm text-rose-500 font-semibold">Imagen cargada</span>
-              <span className="text-xs text-rose-text/30">Click para cambiar</span>
+              <span className="text-sm text-rose-text/40 font-medium">Subiendo imágenes...</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3">
               <UploadIcon className="w-10 h-10 text-rose-text/15 group-hover:text-rose-300/40 transition-colors duration-300" />
-              <span className="text-sm text-rose-text/30 font-medium">Click para seleccionar imagen</span>
-              <span className="text-xs text-rose-text/20">JPG, PNG, WebP o GIF — Max 5MB</span>
+              <span className="text-sm text-rose-text/30 font-medium">Click para seleccionar fotos</span>
+              <span className="text-xs text-rose-text/20">Podés seleccionar varias de una vez — Max 5MB c/u</span>
             </div>
           )}
         </button>
-        {imageUrl && <input type="hidden" name="imageUrl" value={imageUrl} />}
-      </div>
 
-      <div>
-        <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
-          Galería de imágenes (opcional)
-        </label>
-        <input
-          ref={galleryRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif"
-          multiple
-          onChange={handleGalleryUpload}
-          className="hidden"
-        />
-        <button
-          type="button"
-          onClick={() => galleryRef.current?.click()}
-          disabled={uploading}
-          className="w-full rounded-2xl border-2 border-dashed border-rose-200/40 bg-white px-5 py-6 text-center hover:border-rose-300/40 hover:bg-rose-50 transition-all duration-300 disabled:opacity-50"
-        >
-          <span className="text-sm text-rose-text/30 font-medium">
-            {uploading ? "Subiendo..." : "Click para agregar más fotos"}
-          </span>
-        </button>
-        {galleryImages.length > 0 && (
-          <div className="flex gap-3 mt-3 flex-wrap">
+        {(imageUrl || galleryImages.length > 0) && (
+          <div className="flex gap-3 mt-4 flex-wrap">
+            {imageUrl && (
+              <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-rose-400 shadow-md shadow-rose-300/20 group">
+                <img src={imageUrl} alt="" className="w-full h-full object-cover" />
+                <span className="absolute top-1 left-1 bg-rose-400 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">Principal</span>
+                <button
+                  type="button"
+                  onClick={() => { setImageUrl(null); if (galleryImages.length > 0) setAsMain(0); }}
+                  className="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500/80 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  ×
+                </button>
+              </div>
+            )}
             {galleryImages.map((url, i) => (
-              <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden border border-rose-200/30 group">
+              <div key={i} className="relative w-24 h-24 rounded-xl overflow-hidden border border-rose-200/30 group">
                 <img src={url} alt="" className="w-full h-full object-cover" />
                 <button
                   type="button"
-                  onClick={() => removeGalleryImage(i)}
+                  onClick={() => setAsMain(i)}
+                  className="absolute bottom-1 left-1 bg-white/80 backdrop-blur-sm text-rose-text text-[9px] font-bold px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  Principal
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeImage(i)}
                   className="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500/80 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   ×
@@ -343,6 +321,7 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
             ))}
           </div>
         )}
+        {imageUrl && <input type="hidden" name="imageUrl" value={imageUrl} />}
         <input type="hidden" name="images" value={JSON.stringify(galleryImages)} />
       </div>
 
