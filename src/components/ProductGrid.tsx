@@ -5,7 +5,6 @@ import { ProductCard } from "./ProductCard";
 import { SearchBar } from "./SearchBar";
 import { CategoryFilter } from "./CategoryFilter";
 import { SortSelect } from "./SortSelect";
-import { PriceFilter } from "./PriceFilter";
 
 interface Product {
   id: string;
@@ -29,8 +28,6 @@ export function ProductGrid({ products, initialCategory }: ProductGridProps) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState(initialCategory);
   const [sort, setSort] = useState("newest");
-  const [priceMin, setPriceMin] = useState(0);
-  const [priceMax, setPriceMax] = useState(0);
 
   const filtered = useMemo(() => {
     let result = products.filter((p) => {
@@ -39,9 +36,7 @@ export function ProductGrid({ products, initialCategory }: ProductGridProps) {
         ? p.title.toLowerCase().includes(search.toLowerCase()) ||
           p.description.toLowerCase().includes(search.toLowerCase())
         : true;
-      const matchesPriceMin = priceMin ? p.price >= priceMin : true;
-      const matchesPriceMax = priceMax ? p.price <= priceMax : true;
-      return matchesCategory && matchesSearch && matchesPriceMin && matchesPriceMax;
+      return matchesCategory && matchesSearch;
     });
 
     switch (sort) {
@@ -59,7 +54,7 @@ export function ProductGrid({ products, initialCategory }: ProductGridProps) {
     }
 
     return result;
-  }, [products, category, search, sort, priceMin, priceMax]);
+  }, [products, category, search, sort]);
 
   return (
     <>
@@ -78,14 +73,7 @@ export function ProductGrid({ products, initialCategory }: ProductGridProps) {
         <p className="text-sm text-rose-text/30 font-medium">
           {filtered.length} producto{filtered.length !== 1 ? "s" : ""} encontrado{filtered.length !== 1 ? "s" : ""}
         </p>
-        <div className="flex flex-wrap items-center gap-3">
-          <PriceFilter
-            min={priceMin}
-            max={priceMax}
-            onChange={(min, max) => { setPriceMin(min); setPriceMax(max); }}
-          />
-          <SortSelect value={sort} onChange={setSort} />
-        </div>
+        <SortSelect value={sort} onChange={setSort} />
       </div>
 
       {filtered.length === 0 ? (

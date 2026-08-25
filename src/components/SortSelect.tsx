@@ -5,17 +5,29 @@ interface SortSelectProps {
   onChange: (value: string) => void;
 }
 
+const options = [
+  { value: "newest", label: "Más nuevo" },
+  { value: "price-asc", label: "Menor precio" },
+  { value: "price-desc", label: "Mayor precio" },
+  { value: "featured", label: "Destacados" },
+];
+
 export function SortSelect({ value, onChange }: SortSelectProps) {
   return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="px-4 py-2.5 rounded-full bg-white/60 backdrop-blur-xl border border-rose-200/40 text-sm text-rose-text focus:outline-none focus:ring-2 focus:ring-rose-300/40 appearance-none cursor-pointer"
-    >
-      <option value="newest">Más nuevo</option>
-      <option value="price-asc">Menor precio</option>
-      <option value="price-desc">Mayor precio</option>
-      <option value="featured">Destacados</option>
-    </select>
+    <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/60 backdrop-blur-xl border border-rose-200/30">
+      {options.map((opt) => (
+        <button
+          key={opt.value}
+          onClick={() => onChange(opt.value)}
+          className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 ${
+            value === opt.value
+              ? "bg-rose-400 text-white shadow-md shadow-rose-300/20"
+              : "text-rose-text/40 hover:text-rose-text/60 hover:bg-rose-50"
+          }`}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
   );
 }
