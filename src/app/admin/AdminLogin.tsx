@@ -20,7 +20,7 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     setError("");
 
     try {
-      const res = await fetch("/api/products", {
+      const res = await fetch("/api/products?admin=true", {
         headers: { "x-admin-token": token.trim() },
       });
 
