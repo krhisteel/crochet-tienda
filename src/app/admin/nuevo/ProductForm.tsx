@@ -52,11 +52,14 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
       fd.append("file", file);
       try {
         const res = await fetch("/api/upload", { method: "POST", body: fd });
-        const data = await res.json();
-        if (data.url) {
-          setGalleryImages((prev) => [...prev, data.url]);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.url) {
+            setGalleryImages((prev) => [...prev, data.url]);
+          }
         }
       } catch {}
+      await new Promise((r) => setTimeout(r, 500));
     }
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
