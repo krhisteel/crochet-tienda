@@ -179,8 +179,7 @@ export function AdminDashboard() {
   useEffect(() => { return () => { alive.current = false; }; }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token");
-    if (token) loadProducts();
+    localStorage.removeItem("admin-token");
   }, []);
 
   const loadProducts = useCallback(async () => {
