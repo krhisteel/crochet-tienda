@@ -23,6 +23,7 @@ model Product {
   weight        String?
   shippingTime  String?  @map("shipping_time")
   stock         Int      @default(0)
+  variants      String?  @db.Text
   available     Boolean  @default(true)
   featured      Boolean  @default(false)
   createdAt     DateTime @default(now()) @map("created_at")

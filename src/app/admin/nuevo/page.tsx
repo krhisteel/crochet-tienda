@@ -20,6 +20,7 @@ export default function NewProductPage() {
     const weight = formData.get("weight") as string | null;
     const shippingTime = formData.get("shippingTime") as string | null;
     const stock = parseInt(formData.get("stock") as string) || 0;
+    const variants = formData.get("variants") as string | null;
 
     await prisma.product.create({
       data: {
@@ -37,6 +38,7 @@ export default function NewProductPage() {
         weight: weight || null,
         shippingTime: shippingTime || null,
         stock,
+        variants: variants || null,
       },
     });
 

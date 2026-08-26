@@ -5,6 +5,7 @@ import { ReviewsSection } from "@/components/ReviewsSection";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { SizeGuide } from "@/components/SizeGuide";
 import { ImageGallery } from "@/components/ImageGallery";
+import { VariantSelector } from "./VariantSelector";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,14 @@ export default async function ProductPage({
   const discountPercent = hasDiscount
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0;
+
+  let variants: { name: string; color: string }[] = [];
+  if (product.variants) {
+    try {
+      const parsed = JSON.parse(product.variants);
+      if (Array.isArray(parsed)) variants = parsed;
+    } catch {}
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -124,6 +133,14 @@ export default async function ProductPage({
           </div>
 
           <div className="mt-6 pt-6 border-t border-rose-100/50">
+            {variants.length > 0 && (
+              <div className="mb-6">
+                <VariantSelector
+                  variants={variants}
+                  onSelect={() => {}}
+                />
+              </div>
+            )}
             <ProductActions
               title={product.title}
               price={formatPrice(product.price)}

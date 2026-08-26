@@ -2,7 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useRef, FormEvent } from "react";
-import { UploadIcon } from "@/components/Icons";
+import { UploadIcon, PlusIcon, TrashIcon } from "@/components/Icons";
+
+interface Variant {
+  name: string;
+  color: string;
+}
 
 interface ProductFormProps {
   action: (formData: FormData) => Promise<void>;
@@ -21,10 +26,18 @@ interface ProductFormProps {
     weight: string | null;
     shippingTime: string | null;
     stock: number;
+    variants: string | null;
   };
 }
 
 const categories = ["Amigurumis", "Ropa", "Accesorios", "Patrones", "Promociones"];
+
+const presetColors = [
+  "#F8B4C8", "#FBD5DE", "#F0B8C8", "#E8A0B4", "#D4849A",
+  "#C06E86", "#FFFFFF", "#F5F5DC", "#FFFDD0", "#D4A574",
+  "#8B6914", "#4A3728", "#FF6B6B", "#FF8E53", "#FFC75F",
+  "#98D8AA", "#7EC8E3", "#A8D8EA", "#C3AED6", "#FFB6C1",
+];
 
 export function ProductForm({ action, initialData }: ProductFormProps) {
   const router = useRouter();
@@ -39,6 +52,17 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
     }
     return [];
   });
+  const [variants, setVariants] = useState<Variant[]>(() => {
+    if (initialData?.variants) {
+      try {
+        const parsed = JSON.parse(initialData.variants);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch { return []; }
+    }
+    return [];
+  });
+  const [newVariantName, setNewVariantName] = useState("");
+  const [newVariantColor, setNewVariantColor] = useState("#F8B4C8");
   const [submitting, setSubmitting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const isEditing = !!initialData;
@@ -82,6 +106,16 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
     });
   }
 
+  function addVariant() {
+    if (!newVariantName.trim()) return;
+    setVariants((prev) => [...prev, { name: newVariantName.trim(), color: newVariantColor }]);
+    setNewVariantName("");
+  }
+
+  function removeVariant(index: number) {
+    setVariants((prev) => prev.filter((_, i) => i !== index));
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
@@ -95,6 +129,7 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
     } else {
       fd.set("images", JSON.stringify([]));
     }
+    fd.set("variants", JSON.stringify(variants));
     await action(fd);
   }
 
@@ -123,7 +158,7 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
           rows={4}
           defaultValue={initialData?.description}
           placeholder="Materiales, tamaño, detalles del tejido..."
-          className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 resize-none transition-all duration-300"
+          className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:rose-300/20 focus:border-rose-300 resize-none transition-all duration-300"
         />
       </div>
 
@@ -200,6 +235,79 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
+      </div>
+
+      {/* Variantes / Colores / Personajes */}
+      <div className="border-t border-rose-200/20 pt-6">
+        <h3 className="text-xs font-bold text-rose-text/30 uppercase tracking-widest mb-2">
+          Colores o personajes disponibles (opcional)
+        </h3>
+        <p className="text-xs text-rose-text/30 mb-4">
+          Agregá las variantes del producto para que el cliente pueda elegir
+        </p>
+
+        {variants.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {variants.map((v, i) => (
+              <div key={i} className="inline-flex items-center gap-2 bg-white border border-rose-200/30 rounded-full pl-1 pr-3 py-1 group">
+                <span
+                  className="w-6 h-6 rounded-full border border-rose-200/30 shrink-0"
+                  style={{ backgroundColor: v.color }}
+                />
+                <span className="text-sm text-rose-text font-medium">{v.name}</span>
+                <button
+                  type="button"
+                  onClick={() => removeVariant(i)}
+                  className="text-rose-text/20 hover:text-danger transition-colors"
+                >
+                  <TrashIcon className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex gap-2 items-end">
+          <div className="flex-1">
+            <input
+              type="text"
+              value={newVariantName}
+              onChange={(e) => setNewVariantName(e.target.value)}
+              placeholder="Ej: Rosa, Gato, Oso, Azul marino..."
+              className="w-full rounded-xl border border-rose-200/40 bg-white px-4 py-2.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addVariant(); } }}
+            />
+          </div>
+          <div className="relative">
+            <input
+              type="color"
+              value={newVariantColor}
+              onChange={(e) => setNewVariantColor(e.target.value)}
+              className="w-10 h-10 rounded-xl border border-rose-200/40 cursor-pointer appearance-none bg-transparent"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={addVariant}
+            disabled={!newVariantName.trim()}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-rose-100 text-rose-500 px-4 py-2.5 text-sm font-semibold hover:bg-rose-200 transition-all disabled:opacity-40"
+          >
+            <PlusIcon className="w-4 h-4" />
+            Agregar
+          </button>
+        </div>
+
+        <div className="flex flex-wrap gap-1.5 mt-3">
+          {presetColors.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setNewVariantColor(c)}
+              className={`w-6 h-6 rounded-full border-2 transition-all ${newVariantColor === c ? "border-rose-400 scale-110" : "border-rose-200/30 hover:border-rose-300"}`}
+              style={{ backgroundColor: c }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="border-t border-rose-200/20 pt-6">
