@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 
 interface Props {
@@ -20,6 +20,21 @@ export function ImageGallery({ mainImage, images, title }: Props) {
   }
 
   const [selected, setSelected] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const next = useCallback(() => {
+    setSelected((prev) => (prev + 1) % allImages.length);
+  }, [allImages.length]);
+
+  const prev = useCallback(() => {
+    setSelected((prev) => (prev - 1 + allImages.length) % allImages.length);
+  }, [allImages.length]);
+
+  useEffect(() => {
+    if (allImages.length <= 1 || paused) return;
+    const interval = setInterval(next, 4000);
+    return () => clearInterval(interval);
+  }, [allImages.length, paused, next]);
 
   if (allImages.length === 0) {
     return (
@@ -45,19 +60,69 @@ export function ImageGallery({ mainImage, images, title }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div
+      className="flex flex-col gap-3"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="relative aspect-square rounded-[2rem] overflow-hidden liquid-card p-2">
         <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden">
-          <Image src={allImages[selected]} alt={title} fill className="object-cover transition-opacity duration-300" sizes="(max-width: 768px) 100vw, 50vw" priority />
+          {allImages.map((url, i) => (
+            <Image
+              key={url}
+              src={url}
+              alt={`${title} ${i + 1}`}
+              fill
+              className={`object-cover transition-all duration-700 ${
+                i === selected ? "opacity-100 scale-100" : "opacity-0 scale-105"
+              }`}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority={i === 0}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={prev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md flex items-center justify-center text-rose-text/60 hover:text-rose-text hover:bg-white/90 transition-all duration-300 shadow-lg"
+          aria-label="Imagen anterior"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        <button
+          onClick={next}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md flex items-center justify-center text-rose-text/60 hover:text-rose-text hover:bg-white/90 transition-all duration-300 shadow-lg"
+          aria-label="Imagen siguiente"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+          {allImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setSelected(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === selected ? "w-6 bg-white shadow-lg" : "w-1.5 bg-white/40 hover:bg-white/60"
+              }`}
+              aria-label={`Imagen ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
-      <div className="flex gap-2 overflow-x-auto px-1 pb-1 scrollbar-none">
+
+      <div className="flex gap-2 overflow-x-auto px-1 pb-1 scrollbar-none justify-center">
         {allImages.map((url, i) => (
           <button
             key={i}
             onClick={() => setSelected(i)}
             className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 border-2 transition-all duration-300 ${
-              selected === i ? "border-rose-400 shadow-lg shadow-rose-300/20" : "border-transparent opacity-60 hover:opacity-100"
+              selected === i ? "border-rose-400 shadow-lg shadow-rose-300/20 scale-105" : "border-transparent opacity-60 hover:opacity-100"
             }`}
           >
             <Image src={url} alt="" fill className="object-cover" sizes="80px" />
