@@ -87,7 +87,7 @@ export function ProductPageContent({
   const selectedVariantIndex = focusedVariant;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-14">
       <div>
         <ImageGallery
           mainImage={mainImage}
@@ -126,8 +126,8 @@ export function ProductPageContent({
           {title}
         </h1>
 
-        <div className="flex items-baseline gap-3 mb-4">
-          <span className="text-4xl font-extrabold text-rose-text">
+        <div className="flex flex-wrap items-baseline gap-2 sm:gap-3 mb-4">
+          <span className="text-3xl sm:text-4xl font-extrabold text-rose-text">
             {price}
           </span>
           {originalPrice && discountPercent && (
@@ -153,7 +153,7 @@ export function ProductPageContent({
           </div>
         )}
 
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-50 border border-rose-200/30">
             <svg className="w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
@@ -201,7 +201,7 @@ export function ProductPageContent({
             <div className="px-5 py-3 bg-rose-50/50 border-b border-rose-200/20">
               <h3 className="text-xs font-bold text-rose-text/50 uppercase tracking-widest">Detalles del producto</h3>
             </div>
-            <div className="p-5 grid grid-cols-2 gap-5">
+            <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               {materials && (
                 <div>
                   <p className="text-[10px] text-rose-text/30 font-semibold uppercase tracking-wider mb-1">Materiales</p>

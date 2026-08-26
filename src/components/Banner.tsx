@@ -27,7 +27,7 @@ export function Banner() {
         <div className="absolute inset-0 bg-gradient-to-t from-rose-600/40 via-transparent to-transparent" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-32 w-full">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-32 w-full">
         <div className="max-w-2xl">
           <div
             className={`inline-flex items-center gap-2.5 bg-white/20 backdrop-blur-md rounded-full px-5 py-2.5 mb-8 border border-white/25 transition-all duration-700 ${
@@ -39,7 +39,7 @@ export function Banner() {
           </div>
 
           <h1
-            className={`text-5xl sm:text-7xl font-extrabold text-white mb-8 leading-[1.05] tracking-tight transition-all duration-700 delay-100 ${
+            className={`text-4xl sm:text-7xl font-extrabold text-white mb-6 sm:mb-8 leading-[1.05] tracking-tight transition-all duration-700 delay-100 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
@@ -68,7 +68,7 @@ export function Banner() {
                 e.preventDefault();
                 document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="group inline-flex items-center justify-center gap-3 bg-white text-rose-500 font-bold px-10 py-4 rounded-full transition-all duration-300 shadow-2xl shadow-rose-500/20 hover:shadow-rose-400/30 hover:-translate-y-1"
+              className="group inline-flex items-center justify-center gap-3 bg-white text-rose-500 font-bold px-6 sm:px-10 py-4 rounded-full transition-all duration-300 shadow-2xl shadow-rose-500/20 hover:shadow-rose-400/30 hover:-translate-y-1"
             >
               Explorar Catálogo
               <ChevronDownIcon className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
@@ -76,7 +76,7 @@ export function Banner() {
             <Link
               href="https://wa.me/56936621284"
               target="_blank"
-              className="group inline-flex items-center justify-center gap-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-bold px-10 py-4 rounded-full transition-all duration-300 hover:bg-white/25 hover:-translate-y-1"
+              className="group inline-flex items-center justify-center gap-3 bg-white/15 backdrop-blur-md border border-white/30 text-white font-bold px-6 sm:px-10 py-4 rounded-full transition-all duration-300 hover:bg-white/25 hover:-translate-y-1"
             >
               <WhatsAppIcon className="w-5 h-5" />
               Contactar por WhatsApp

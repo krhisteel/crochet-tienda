@@ -683,6 +683,7 @@ export function AdminDashboard() {
             <div className="text-center py-16 liquid-card rounded-3xl"><p className="text-rose-text/40">Sin materiales registrados</p></div>
           ) : (
             <div className="liquid-card rounded-3xl overflow-hidden">
+              <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead className="bg-rose-100/30 border-b border-rose-200/20">
                   <tr>
@@ -714,17 +715,17 @@ export function AdminDashboard() {
                           <button onClick={() => { setMatEditing(m.id); setMatForm({ name: m.name, category: m.category, quantity: m.quantity, unit: m.unit, minStock: m.minStock, costPerUnit: m.costPerUnit || 0, supplier: m.supplier || "", notes: m.notes || "" }); }} className="text-rose-text/30 hover:text-rose-400 transition-colors"><PencilIcon className="w-3.5 h-3.5" /></button>
                           <button onClick={() => deleteMaterial(m.id)} className="text-danger/30 hover:text-danger transition-colors"><TrashIcon className="w-3.5 h-3.5" /></button>
                         </div>
-                      </td>
+                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
         </>
       )}
 
-      {/* ============ SALES ============ */}
       {view === "sales" && (
         <>
           <div className="flex items-center gap-3 mb-8">
@@ -782,6 +783,7 @@ export function AdminDashboard() {
             <div className="text-center py-16 liquid-card rounded-3xl"><p className="text-rose-text/40">Sin ventas registradas</p></div>
           ) : (
             <div className="liquid-card rounded-3xl overflow-hidden">
+              <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead className="bg-rose-100/30 border-b border-rose-200/20">
                   <tr>
@@ -803,11 +805,12 @@ export function AdminDashboard() {
                       <td className="px-5 py-4 hidden md:table-cell"><span className="text-[11px] font-bold text-rose-text/40 bg-rose-100 rounded-full px-3 py-1 uppercase tracking-wider">{s.channel}</span></td>
                       <td className="px-5 py-4 font-bold text-rose-text">{formatPrice(s.totalPrice)}</td>
                       <td className="px-5 py-4 hidden lg:table-cell text-rose-text/40 text-xs">{formatDate(s.soldAt)}</td>
-                      <td className="px-5 py-4 text-right"><button onClick={() => deleteSale(s.id)} className="text-danger/30 hover:text-danger transition-colors"><TrashIcon className="w-3.5 h-3.5" /></button></td>
+                      <td className="px-5 py-4 text-right"><button onClick={() => deleteSale(s.id)} className="text-danger/30 hover:text-danger transition-colors"><TrashIcon className="w-3.5 h-3.5" /></button>                   </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
         </>

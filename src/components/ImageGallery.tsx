@@ -104,7 +104,7 @@ export function ImageGallery({ mainImage, images, title, variants = [], selected
 
         <button
           onClick={prev}
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 backdrop-blur-md flex items-center justify-center text-rose-text/60 hover:text-rose-text hover:bg-white/90 transition-all duration-300 shadow-lg"
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md flex items-center justify-center text-rose-text/60 hover:text-rose-text hover:bg-white/90 transition-all duration-300 shadow-lg"
           aria-label="Imagen anterior"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -114,7 +114,7 @@ export function ImageGallery({ mainImage, images, title, variants = [], selected
 
         <button
           onClick={next}
-          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 backdrop-blur-md flex items-center justify-center text-rose-text/60 hover:text-rose-text hover:bg-white/90 transition-all duration-300 shadow-lg"
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/70 backdrop-blur-md flex items-center justify-center text-rose-text/60 hover:text-rose-text hover:bg-white/90 transition-all duration-300 shadow-lg"
           aria-label="Imagen siguiente"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -122,7 +122,7 @@ export function ImageGallery({ mainImage, images, title, variants = [], selected
           </svg>
         </button>
 
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 p-2">
           {allImages.map((_, i) => (
             <button
               key={i}

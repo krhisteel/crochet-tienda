@@ -74,7 +74,7 @@ export function Header() {
             <CartButton solid={showSolid} />
             <Link
               href="/favoritos"
-              className={`relative p-2.5 rounded-full transition-all duration-300 ${
+              className={`relative p-3 rounded-full transition-all duration-300 ${
                 showSolid
                   ? "bg-rose-100/50 text-rose-text hover:bg-rose-100"
                   : "bg-white/10 text-white hover:bg-white/20"
@@ -106,7 +106,7 @@ export function Header() {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`md:hidden p-2.5 rounded-full transition-all duration-300 ${
+              className={`md:hidden p-3 rounded-full transition-all duration-300 ${
                 showSolid
                   ? "bg-rose-100/50 text-rose-text hover:bg-rose-100"
                   : "bg-white/10 text-white hover:bg-white/20"
