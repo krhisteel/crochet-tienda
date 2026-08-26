@@ -22,6 +22,7 @@ model Product {
   colors        String?
   weight        String?
   shippingTime  String?  @map("shipping_time")
+  stock         Int      @default(0)
   available     Boolean  @default(true)
   featured      Boolean  @default(false)
   createdAt     DateTime @default(now()) @map("created_at")
@@ -41,4 +42,50 @@ model Review {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("reviews")
+}
+
+model Material {
+  id            String   @id @default(cuid())
+  name          String
+  category      String
+  quantity      Float    @default(0)
+  unit          String   @default("unidades")
+  minStock      Float    @default(5) @map("min_stock")
+  costPerUnit   Float?   @map("cost_per_unit")
+  supplier      String?
+  notes         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("materials")
+}
+
+model Sale {
+  id            String   @id @default(cuid())
+  productName   String   @map("product_name")
+  category      String
+  quantity      Int      @default(1)
+  unitPrice     Float    @map("unit_price")
+  totalPrice    Float    @map("total_price")
+  channel       String   @default("whatsapp")
+  customerName  String?  @map("customer_name")
+  notes         String?
+  soldAt        DateTime @default(now()) @map("sold_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("sales")
+}
+
+model ProductionTask {
+  id            String   @id @default(cuid())
+  productName   String   @map("product_name")
+  quantity      Int      @default(1)
+  priority      String   @default("normal")
+  status        String   @default("pendiente")
+  dueDate       DateTime? @map("due_date")
+  notes         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("production_tasks")
 }

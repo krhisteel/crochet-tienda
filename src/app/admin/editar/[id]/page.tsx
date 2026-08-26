@@ -21,6 +21,7 @@ interface Product {
   colors: string | null;
   weight: string | null;
   shippingTime: string | null;
+  stock: number;
 }
 
 export default function EditProductPage({
@@ -71,6 +72,7 @@ export default function EditProductPage({
         colors: formData.get("colors") || null,
         weight: formData.get("weight") || null,
         shippingTime: formData.get("shippingTime") || null,
+        stock: Number(formData.get("stock")) || 0,
       }),
     });
     if (res.ok) {

@@ -20,6 +20,7 @@ interface ProductFormProps {
     colors: string | null;
     weight: string | null;
     shippingTime: string | null;
+    stock: number;
   };
 }
 
@@ -126,7 +127,7 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div>
           <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
             Precio (CLP)
@@ -153,6 +154,19 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
             min="0"
             defaultValue={initialData?.originalPrice ?? ""}
             placeholder="Dejar vacío si no hay promo"
+            className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+          />
+        </div>
+        <div>
+          <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+            Stock disponible
+          </label>
+          <input
+            name="stock"
+            type="number"
+            min="0"
+            defaultValue={initialData?.stock ?? 0}
+            placeholder="0"
             className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
           />
         </div>
