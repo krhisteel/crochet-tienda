@@ -6,12 +6,14 @@ import { useState } from "react";
 interface ProductActionsProps {
   title: string;
   price: string;
+  variant?: string;
 }
 
-export function ProductActions({ title, price }: ProductActionsProps) {
+export function ProductActions({ title, price, variant }: ProductActionsProps) {
   const [copied, setCopied] = useState(false);
+  const variantText = variant ? ` (${variant})` : "";
   const msg = encodeURIComponent(
-    `Hola! Me interesa: ${title} — ${price}\n¿Está disponible?`
+    `Hola! Me interesa: ${title}${variantText} — ${price}\n¿Está disponible?`
   );
   const whatsappUrl = `https://wa.me/56936621284?text=${msg}`;
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";

@@ -1,11 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import { ProductActions } from "./ProductActions";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { SizeGuide } from "@/components/SizeGuide";
 import { ImageGallery } from "@/components/ImageGallery";
-import { VariantSelector } from "./VariantSelector";
+import { ProductInfo } from "./ProductInfo";
 
 export const dynamic = "force-dynamic";
 
@@ -133,17 +132,10 @@ export default async function ProductPage({
           </div>
 
           <div className="mt-6 pt-6 border-t border-rose-100/50">
-            {variants.length > 0 && (
-              <div className="mb-6">
-                <VariantSelector
-                  variants={variants}
-                  onSelect={() => {}}
-                />
-              </div>
-            )}
-            <ProductActions
+            <ProductInfo
               title={product.title}
               price={formatPrice(product.price)}
+              variants={variants}
             />
           </div>
         </div>
