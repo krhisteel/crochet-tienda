@@ -33,9 +33,9 @@ interface Review {
   name: string;
   rating: number;
   comment: string;
-  productId: string;
+  productId: string | null;
   createdAt: string;
-  product: { title: string; imageUrl: string | null };
+  product: { title: string; imageUrl: string | null } | null;
 }
 
 interface Material {
@@ -597,7 +597,7 @@ export function AdminDashboard() {
                         </div>
                       </div>
                       <p className="text-sm text-rose-text/60 leading-relaxed mt-2 ml-12">{r.comment}</p>
-                      <p className="text-[11px] text-rose-text/25 mt-2 ml-12">sobre: <span className="font-medium text-rose-text/40">{r.product.title}</span></p>
+                      {r.product && <p className="text-[11px] text-rose-text/25 mt-2 ml-12">sobre: <span className="font-medium text-rose-text/40">{r.product.title}</span></p>}
                     </div>
                     <button onClick={() => deleteReview(r.id)} disabled={deletingReviewId === r.id} className="text-rose-text/20 hover:text-danger transition-colors disabled:opacity-50 shrink-0"><TrashIcon className="w-4 h-4" /></button>
                   </div>
