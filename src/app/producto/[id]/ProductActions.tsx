@@ -3,18 +3,32 @@
 import { WhatsAppIcon, ShareIcon, CopyIcon } from "@/components/Icons";
 import { useState } from "react";
 
+interface VariantSelection {
+  name: string;
+  qty: number;
+}
+
 interface ProductActionsProps {
   title: string;
   price: string;
-  variant?: string;
+  variants?: VariantSelection[];
 }
 
-export function ProductActions({ title, price, variant }: ProductActionsProps) {
+export function ProductActions({ title, price, variants = [] }: ProductActionsProps) {
   const [copied, setCopied] = useState(false);
-  const variantText = variant ? ` (${variant})` : "";
-  const msg = encodeURIComponent(
-    `Hola! Me interesa: ${title}${variantText} — ${price}\n¿Está disponible?`
-  );
+
+  const hasVariants = variants.length > 0;
+  const totalItems = variants.reduce((s, v) => s + v.qty, 0);
+
+  function buildMessage(): string {
+    if (!hasVariants) {
+      return `Hola! Me interesa: ${title} — ${price}\n¿Está disponible?`;
+    }
+    const lines = variants.map((v) => `  ${v.qty}x ${v.name}`);
+    return `Hola! Me interesa:\n${title}\n${lines.join("\n")}\n\nPrecio: ${price}\n¿Está disponible?`;
+  }
+
+  const msg = encodeURIComponent(buildMessage());
   const whatsappUrl = `https://wa.me/56936621284?text=${msg}`;
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
@@ -40,16 +54,23 @@ export function ProductActions({ title, price, variant }: ProductActionsProps) {
     window.open(`https://wa.me/?text=${text}`, "_blank");
   }
 
+  const isDisabled = hasVariants && totalItems === 0;
+
   return (
     <div className="space-y-3">
       <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center justify-center gap-2.5 w-full rounded-full bg-whatsapp text-white font-semibold py-4 px-6 hover:bg-whatsapp-hover transition-all duration-300 shadow-lg shadow-whatsapp/20 hover:shadow-xl hover:shadow-whatsapp/30 hover:-translate-y-0.5 text-base"
+        href={isDisabled ? undefined : whatsappUrl}
+        target={isDisabled ? undefined : "_blank"}
+        rel={isDisabled ? undefined : "noopener noreferrer"}
+        onClick={(e) => { if (isDisabled) e.preventDefault(); }}
+        className={`flex items-center justify-center gap-2.5 w-full rounded-full font-semibold py-4 px-6 transition-all duration-300 shadow-lg text-base ${
+          isDisabled
+            ? "bg-rose-200/50 text-rose-text/30 cursor-not-allowed shadow-none"
+            : "bg-whatsapp text-white hover:bg-whatsapp-hover hover:shadow-xl hover:shadow-whatsapp/30 hover:-translate-y-0.5 shadow-whatsapp/20"
+        }`}
       >
         <WhatsAppIcon className="w-5 h-5" />
-        Pedir por WhatsApp
+        {hasVariants ? `Pedir${totalItems > 0 ? ` (${totalItems})` : ""} por WhatsApp` : "Pedir por WhatsApp"}
       </a>
 
       <div className="flex gap-2">

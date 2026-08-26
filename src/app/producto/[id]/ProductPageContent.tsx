@@ -55,7 +55,23 @@ export function ProductPageContent({
   hasDetails,
   productCategory,
 }: ProductPageContentProps) {
-  const [selectedVariant, setSelectedVariant] = useState(0);
+  const [quantities, setQuantities] = useState<Record<number, number>>(() => {
+    const init: Record<number, number> = {};
+    variants.forEach((_, i) => { init[i] = 0; });
+    return init;
+  });
+
+  function handleQuantityChange(index: number, qty: number) {
+    setQuantities((prev) => ({ ...prev, [index]: qty }));
+  }
+
+  const selectedVariants = variants
+    .map((v, i) => ({ name: v.name, qty: quantities[i] || 0 }))
+    .filter((v) => v.qty > 0);
+
+  const selectedVariantIndex = selectedVariants.length > 0
+    ? variants.findIndex((v) => v.name === selectedVariants[0].name)
+    : 0;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
@@ -65,7 +81,7 @@ export function ProductPageContent({
           images={images}
           title={title}
           variants={variants}
-          selectedVariant={selectedVariant}
+          selectedVariant={selectedVariantIndex}
         />
       </div>
 
@@ -142,8 +158,8 @@ export function ProductPageContent({
           <div className="mb-6">
             <VariantSelector
               variants={variants}
-              selected={selectedVariant}
-              onSelect={setSelectedVariant}
+              quantities={quantities}
+              onQuantityChange={handleQuantityChange}
             />
           </div>
         )}
@@ -151,7 +167,7 @@ export function ProductPageContent({
         <ProductActions
           title={title}
           price={price}
-          variant={variants.length > 0 ? variants[selectedVariant]?.name : undefined}
+          variants={variants.length > 0 ? selectedVariants : undefined}
         />
 
         {hasDetails && (
