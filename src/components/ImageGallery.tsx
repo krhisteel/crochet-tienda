@@ -3,15 +3,28 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 
+interface Variant {
+  name: string;
+  color: string;
+  image?: string;
+}
+
 interface Props {
   mainImage: string | null;
   images: string | null;
   title: string;
+  variants?: Variant[];
+  selectedVariant?: number;
 }
 
-export function ImageGallery({ mainImage, images, title }: Props) {
+export function ImageGallery({ mainImage, images, title, variants = [], selectedVariant }: Props) {
   const allImages = useMemo(() => {
     const result: string[] = [];
+
+    if (selectedVariant !== undefined && variants[selectedVariant]?.image) {
+      result.push(variants[selectedVariant].image!);
+    }
+
     if (mainImage) result.push(mainImage);
     if (images) {
       try {
@@ -20,7 +33,7 @@ export function ImageGallery({ mainImage, images, title }: Props) {
       } catch {}
     }
     return result;
-  }, [mainImage, images]);
+  }, [mainImage, images, variants, selectedVariant]);
 
   const [selected, setSelected] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -39,9 +52,13 @@ export function ImageGallery({ mainImage, images, title }: Props) {
     return () => clearInterval(interval);
   }, [allImages.length, paused, next]);
 
+  useEffect(() => {
+    setSelected(0);
+  }, [selectedVariant]);
+
   if (allImages.length === 0) {
     return (
-      <div className="relative aspect-[4/3] max-h-[400px] rounded-2xl overflow-hidden liquid-card p-1.5">
+      <div className="relative aspect-square rounded-2xl overflow-hidden liquid-card p-1.5">
         <div className="relative w-full h-full rounded-xl overflow-hidden bg-gradient-to-br from-rose-100 via-rose-50 to-cream flex items-center justify-center">
           <svg className="w-20 h-20 opacity-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
             <circle cx="12" cy="12" r="10" />
@@ -54,7 +71,7 @@ export function ImageGallery({ mainImage, images, title }: Props) {
 
   if (allImages.length === 1) {
     return (
-      <div className="relative aspect-[4/3] max-h-[400px] rounded-2xl overflow-hidden liquid-card p-1.5">
+      <div className="relative aspect-square rounded-2xl overflow-hidden liquid-card p-1.5">
         <div className="relative w-full h-full rounded-xl overflow-hidden">
           <Image src={allImages[0]} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
         </div>
@@ -68,7 +85,7 @@ export function ImageGallery({ mainImage, images, title }: Props) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative aspect-[4/3] max-h-[400px] rounded-2xl overflow-hidden liquid-card p-1.5">
+      <div className="relative aspect-square rounded-2xl overflow-hidden liquid-card p-1.5">
         <div className="relative w-full h-full rounded-xl overflow-hidden">
           {allImages.map((url, i) => (
             <Image

@@ -7,6 +7,7 @@ import { UploadIcon, PlusIcon, TrashIcon } from "@/components/Icons";
 interface Variant {
   name: string;
   color: string;
+  image?: string;
 }
 
 interface ProductFormProps {
@@ -63,6 +64,7 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
   });
   const [newVariantName, setNewVariantName] = useState("");
   const [newVariantColor, setNewVariantColor] = useState("#F8B4C8");
+  const [newVariantImage, setNewVariantImage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const isEditing = !!initialData;
@@ -108,8 +110,11 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
 
   function addVariant() {
     if (!newVariantName.trim()) return;
-    setVariants((prev) => [...prev, { name: newVariantName.trim(), color: newVariantColor }]);
+    const v: Variant = { name: newVariantName.trim(), color: newVariantColor };
+    if (newVariantImage.trim()) v.image = newVariantImage.trim();
+    setVariants((prev) => [...prev, v]);
     setNewVariantName("");
+    setNewVariantImage("");
   }
 
   function removeVariant(index: number) {
@@ -250,10 +255,14 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
           <div className="flex flex-wrap gap-2 mb-4">
             {variants.map((v, i) => (
               <div key={i} className="inline-flex items-center gap-2 bg-white border border-rose-200/30 rounded-full pl-1 pr-3 py-1 group">
-                <span
-                  className="w-6 h-6 rounded-full border border-rose-200/30 shrink-0"
-                  style={{ backgroundColor: v.color }}
-                />
+                {v.image ? (
+                  <img src={v.image} alt={v.name} className="w-6 h-6 rounded-full border border-rose-200/30 shrink-0 object-cover" />
+                ) : (
+                  <span
+                    className="w-6 h-6 rounded-full border border-rose-200/30 shrink-0"
+                    style={{ backgroundColor: v.color }}
+                  />
+                )}
                 <span className="text-sm text-rose-text font-medium">{v.name}</span>
                 <button
                   type="button"
@@ -267,34 +276,45 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
           </div>
         )}
 
-        <div className="flex gap-2 items-end">
-          <div className="flex-1">
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-2 items-end">
+            <div className="flex-1">
+              <input
+                type="text"
+                value={newVariantName}
+                onChange={(e) => setNewVariantName(e.target.value)}
+                placeholder="Ej: Rosa, Gato, Oso, Azul marino..."
+                className="w-full rounded-xl border border-rose-200/40 bg-white px-4 py-2.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addVariant(); } }}
+              />
+            </div>
+            <div className="relative">
+              <input
+                type="color"
+                value={newVariantColor}
+                onChange={(e) => setNewVariantColor(e.target.value)}
+                className="w-10 h-10 rounded-xl border border-rose-200/40 cursor-pointer appearance-none bg-transparent"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={addVariant}
+              disabled={!newVariantName.trim()}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-rose-100 text-rose-500 px-4 py-2.5 text-sm font-semibold hover:bg-rose-200 transition-all disabled:opacity-40"
+            >
+              <PlusIcon className="w-4 h-4" />
+              Agregar
+            </button>
+          </div>
+          <div>
             <input
               type="text"
-              value={newVariantName}
-              onChange={(e) => setNewVariantName(e.target.value)}
-              placeholder="Ej: Rosa, Gato, Oso, Azul marino..."
+              value={newVariantImage}
+              onChange={(e) => setNewVariantImage(e.target.value)}
+              placeholder="URL de imagen para esta variante (opcional)"
               className="w-full rounded-xl border border-rose-200/40 bg-white px-4 py-2.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
-              onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addVariant(); } }}
             />
           </div>
-          <div className="relative">
-            <input
-              type="color"
-              value={newVariantColor}
-              onChange={(e) => setNewVariantColor(e.target.value)}
-              className="w-10 h-10 rounded-xl border border-rose-200/40 cursor-pointer appearance-none bg-transparent"
-            />
-          </div>
-          <button
-            type="button"
-            onClick={addVariant}
-            disabled={!newVariantName.trim()}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-rose-100 text-rose-500 px-4 py-2.5 text-sm font-semibold hover:bg-rose-200 transition-all disabled:opacity-40"
-          >
-            <PlusIcon className="w-4 h-4" />
-            Agregar
-          </button>
         </div>
 
         <div className="flex flex-wrap gap-1.5 mt-3">
@@ -351,29 +371,16 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
-                Colores disponibles
-              </label>
-              <input
-                name="colors"
-                defaultValue={initialData?.colors ?? ""}
-                placeholder="Ej: Rosa, blanco, beige"
-                className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
-              />
-            </div>
-            <div>
-              <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
-                Tiempo de envío
-              </label>
-              <input
-                name="shippingTime"
-                defaultValue={initialData?.shippingTime ?? ""}
-                placeholder="Ej: 3-5 días hábiles"
-                className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
-              />
-            </div>
+          <div>
+            <label className="block text-[11px] font-bold text-rose-text/40 uppercase tracking-widest mb-2.5">
+              Tiempo de envío
+            </label>
+            <input
+              name="shippingTime"
+              defaultValue={initialData?.shippingTime ?? ""}
+              placeholder="Ej: 3-5 días hábiles"
+              className="w-full rounded-2xl border border-rose-200/40 bg-white px-5 py-3.5 text-sm text-rose-text placeholder:text-rose-text/20 focus:outline-none focus:ring-2 focus:ring-rose-300/20 focus:border-rose-300 transition-all duration-300"
+            />
           </div>
         </div>
       </div>

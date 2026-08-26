@@ -3,6 +3,7 @@
 interface Variant {
   name: string;
   color: string;
+  image?: string;
 }
 
 interface VariantSelectorProps {
@@ -29,10 +30,14 @@ export function VariantSelector({ variants, selected, onSelect }: VariantSelecto
                 : "border-rose-200/30 bg-white text-rose-text/50 hover:border-rose-300/50 hover:bg-rose-50/50"
             }`}
           >
-            <span
-              className="w-5 h-5 rounded-full border border-rose-200/30 shrink-0"
-              style={{ backgroundColor: v.color }}
-            />
+            {v.image ? (
+              <img src={v.image} alt={v.name} className="w-5 h-5 rounded-full border border-rose-200/30 shrink-0 object-cover" />
+            ) : (
+              <span
+                className="w-5 h-5 rounded-full border border-rose-200/30 shrink-0"
+                style={{ backgroundColor: v.color }}
+              />
+            )}
             {v.name}
           </button>
         ))}
