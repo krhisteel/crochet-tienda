@@ -50,9 +50,23 @@ export default async function ProductPage({
         <ProductPageContent
           title={product.title}
           price={formatPrice(product.price)}
+          originalPrice={product.originalPrice ? formatPrice(product.originalPrice) : undefined}
+          discountPercent={discountPercent}
           mainImage={product.imageUrl}
           images={product.images}
           variants={variants}
+          category={product.category}
+          featured={product.featured}
+          available={product.available}
+          craftingTime={product.craftingTime}
+          shippingTime={product.shippingTime}
+          description={product.description}
+          materials={product.materials}
+          dimensions={product.dimensions}
+          colors={product.colors}
+          weight={product.weight}
+          hasDetails={!!hasDetails}
+          productCategory={product.category}
         />
 
         <div className="mt-16">
