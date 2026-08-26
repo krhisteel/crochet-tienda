@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 
 interface Props {
@@ -10,14 +10,17 @@ interface Props {
 }
 
 export function ImageGallery({ mainImage, images, title }: Props) {
-  let allImages: string[] = [];
-  if (mainImage) allImages.push(mainImage);
-  if (images) {
-    try {
-      const parsed = JSON.parse(images);
-      if (Array.isArray(parsed)) allImages = [...allImages, ...parsed];
-    } catch {}
-  }
+  const allImages = useMemo(() => {
+    const result: string[] = [];
+    if (mainImage) result.push(mainImage);
+    if (images) {
+      try {
+        const parsed = JSON.parse(images);
+        if (Array.isArray(parsed)) result.push(...parsed);
+      } catch {}
+    }
+    return result;
+  }, [mainImage, images]);
 
   const [selected, setSelected] = useState(0);
   const [paused, setPaused] = useState(false);
