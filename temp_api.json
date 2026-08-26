@@ -1,8 +1,0 @@
-﻿curl.exe : curl: option --output-encoding: is unknown
-En línea: 1 Carácter: 1
-+ curl.exe -s --output-encoding utf-8 "https://crochet-tienda.vercel.ap ...
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (curl: option --...ing: is unknown:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
-curl: try 'curl --help' for more information
