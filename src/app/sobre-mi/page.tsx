@@ -17,7 +17,7 @@ export default function SobreMiPage() {
             Sobre Mí
           </span>
           <h1 className="text-4xl sm:text-5xl font-bold text-rose-text mb-4">
-            Hola, soy <span className="text-rose-400">[Tu Nombre]</span>
+            Hola, soy <span className="text-rose-400">Aileen</span>
           </h1>
           <p className="text-lg text-rose-text/50 max-w-2xl mx-auto">
             La persona que está detrás de cada tejido hecho a mano.
