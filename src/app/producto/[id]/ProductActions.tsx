@@ -11,21 +11,27 @@ interface VariantSelection {
 interface ProductActionsProps {
   title: string;
   price: string;
+  total?: number;
   variants?: VariantSelection[];
 }
 
-export function ProductActions({ title, price, variants = [] }: ProductActionsProps) {
+export function ProductActions({ title, price, total, variants = [] }: ProductActionsProps) {
   const [copied, setCopied] = useState(false);
 
   const hasVariants = variants.length > 0;
   const totalItems = variants.reduce((s, v) => s + v.qty, 0);
 
+  function formatCLP(n: number) {
+    return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP" }).format(n);
+  }
+
   function buildMessage(): string {
     if (!hasVariants) {
       return `Hola! Me interesa: ${title} — ${price}\n¿Está disponible?`;
     }
-    const lines = variants.map((v) => `  ${v.qty}x ${v.name}`);
-    return `Hola! Me interesa:\n${title}\n${lines.join("\n")}\n\nPrecio: ${price}\n¿Está disponible?`;
+    const lines = variants.map((v) => `  ${v.qty}x ${v.name} — ${total ? formatCLP(v.qty * (total / totalItems)) : price}`);
+    const totalLine = total ? `\n\nTotal: ${formatCLP(total)}` : "";
+    return `Hola! Me interesa:\n${title}\n${lines.join("\n")}${totalLine}\n\n¿Está disponible?`;
   }
 
   const msg = encodeURIComponent(buildMessage());

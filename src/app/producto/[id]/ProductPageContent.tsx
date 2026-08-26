@@ -15,6 +15,7 @@ interface Variant {
 interface ProductPageContentProps {
   title: string;
   price: string;
+  priceRaw: number;
   originalPrice?: string;
   discountPercent?: number;
   mainImage: string | null;
@@ -37,6 +38,7 @@ interface ProductPageContentProps {
 export function ProductPageContent({
   title,
   price,
+  priceRaw,
   originalPrice,
   discountPercent,
   mainImage,
@@ -61,6 +63,13 @@ export function ProductPageContent({
     return init;
   });
   const [focusedVariant, setFocusedVariant] = useState(0);
+
+  const totalItems = variants.reduce((s, _, i) => s + (quantities[i] || 0), 0);
+  const total = totalItems > 0 ? priceRaw * totalItems : 0;
+
+  function formatCLP(n: number) {
+    return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP" }).format(n);
+  }
 
   function handleQuantityChange(index: number, qty: number) {
     setQuantities((prev) => ({ ...prev, [index]: qty }));
@@ -133,6 +142,17 @@ export function ProductPageContent({
           )}
         </div>
 
+        {totalItems > 0 && (
+          <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-rose-100 to-rose-50 border border-rose-200/30 px-5 py-3 mb-4">
+            <span className="text-sm text-rose-text/60 font-medium">
+              {totalItems} {totalItems === 1 ? "unidad" : "unidades"} × {price}
+            </span>
+            <span className="text-xl font-extrabold text-rose-text">
+              {formatCLP(total)}
+            </span>
+          </div>
+        )}
+
         <div className="flex items-center gap-3 mb-6">
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-50 border border-rose-200/30">
             <svg className="w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -172,6 +192,7 @@ export function ProductPageContent({
         <ProductActions
           title={title}
           price={price}
+          total={totalItems > 0 ? total : undefined}
           variants={variants.length > 0 ? selectedVariants : undefined}
         />
 

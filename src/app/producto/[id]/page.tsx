@@ -49,6 +49,7 @@ export default async function ProductPage({
         <ProductPageContent
           title={product.title}
           price={formatPrice(product.price)}
+          priceRaw={product.price}
           originalPrice={product.originalPrice ? formatPrice(product.originalPrice) : undefined}
           discountPercent={discountPercent}
           mainImage={product.imageUrl}
