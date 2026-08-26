@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { RelatedProducts } from "@/components/RelatedProducts";
-import { SizeGuide } from "@/components/SizeGuide";
 import { ProductPageContent } from "./ProductPageContent";
 
 export const dynamic = "force-dynamic";
