@@ -12,9 +12,10 @@ interface VariantSelectorProps {
   variants: Variant[];
   quantities: Record<number, number>;
   onQuantityChange: (index: number, qty: number) => void;
+  onVariantFocus: (index: number) => void;
 }
 
-export function VariantSelector({ variants, quantities, onQuantityChange }: VariantSelectorProps) {
+export function VariantSelector({ variants, quantities, onQuantityChange, onVariantFocus }: VariantSelectorProps) {
   const [open, setOpen] = useState(false);
   const totalItems = variants.reduce((s, _, i) => s + (quantities[i] || 0), 0);
   const selectedNames = variants
@@ -59,9 +60,11 @@ export function VariantSelector({ variants, quantities, onQuantityChange }: Vari
           {variants.map((v, i) => {
             const qty = quantities[i] || 0;
             return (
-              <div
+              <button
                 key={i}
-                className={`flex items-center gap-3 px-5 py-3 transition-colors ${
+                type="button"
+                onClick={() => onVariantFocus(i)}
+                className={`w-full flex items-center gap-3 px-5 py-3 transition-colors text-left ${
                   i < variants.length - 1 ? "border-b border-rose-200/15" : ""
                 } ${qty > 0 ? "bg-rose-100/40" : "hover:bg-rose-50/50"}`}
               >
@@ -78,7 +81,10 @@ export function VariantSelector({ variants, quantities, onQuantityChange }: Vari
                   {v.name}
                 </span>
 
-                <div className="flex items-center gap-0 bg-white rounded-full border border-rose-200/30 overflow-hidden">
+                <div
+                  className="flex items-center gap-0 bg-white rounded-full border border-rose-200/30 overflow-hidden"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <button
                     type="button"
                     onClick={() => onQuantityChange(i, Math.max(0, qty - 1))}
@@ -98,7 +104,7 @@ export function VariantSelector({ variants, quantities, onQuantityChange }: Vari
                     +
                   </button>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>

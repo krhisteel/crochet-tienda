@@ -60,18 +60,22 @@ export function ProductPageContent({
     variants.forEach((_, i) => { init[i] = 0; });
     return init;
   });
+  const [focusedVariant, setFocusedVariant] = useState(0);
 
   function handleQuantityChange(index: number, qty: number) {
     setQuantities((prev) => ({ ...prev, [index]: qty }));
+    setFocusedVariant(index);
+  }
+
+  function handleVariantFocus(index: number) {
+    setFocusedVariant(index);
   }
 
   const selectedVariants = variants
     .map((v, i) => ({ name: v.name, qty: quantities[i] || 0 }))
     .filter((v) => v.qty > 0);
 
-  const selectedVariantIndex = selectedVariants.length > 0
-    ? variants.findIndex((v) => v.name === selectedVariants[0].name)
-    : 0;
+  const selectedVariantIndex = focusedVariant;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
@@ -160,6 +164,7 @@ export function ProductPageContent({
               variants={variants}
               quantities={quantities}
               onQuantityChange={handleQuantityChange}
+              onVariantFocus={handleVariantFocus}
             />
           </div>
         )}
