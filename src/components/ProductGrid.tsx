@@ -24,10 +24,13 @@ interface ProductGridProps {
   initialCategory: string;
 }
 
+const INITIAL_COUNT = 6;
+
 export function ProductGrid({ products, initialCategory }: ProductGridProps) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState(initialCategory);
   const [sort, setSort] = useState("newest");
+  const [showAll, setShowAll] = useState(false);
 
   const filtered = useMemo(() => {
     let result = products.filter((p) => {
@@ -55,6 +58,9 @@ export function ProductGrid({ products, initialCategory }: ProductGridProps) {
 
     return result;
   }, [products, category, search, sort]);
+
+  const visible = showAll ? filtered : filtered.slice(0, INITIAL_COUNT);
+  const hasMore = filtered.length > INITIAL_COUNT;
 
   return (
     <>
@@ -94,13 +100,29 @@ export function ProductGrid({ products, initialCategory }: ProductGridProps) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filtered.map((product, i) => (
-            <div key={product.id} className={`fade-in-up stagger-${Math.min(i + 1, 6)}`}>
-              <ProductCard product={product} />
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {visible.map((product, i) => (
+              <div key={product.id} className={`fade-in-up stagger-${Math.min(i + 1, 6)}`}>
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+
+          {hasMore && (
+            <div className="text-center mt-12">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="inline-flex items-center gap-2 rounded-2xl border border-rose-200/40 bg-white text-rose-text/50 font-semibold px-10 py-3.5 text-sm hover:bg-rose-50 hover:text-rose-text hover:border-rose-300/50 transition-all duration-300"
+              >
+                {showAll ? "Ver menos" : `Ver más productos`}
+                <svg className={`w-4 h-4 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </>
   );

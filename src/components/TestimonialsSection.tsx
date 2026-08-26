@@ -22,8 +22,11 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+const INITIAL_COUNT = 3;
+
 export function TestimonialsSection() {
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     fetch("/api/reviews/public")
@@ -36,6 +39,9 @@ export function TestimonialsSection() {
 
   if (reviews.length === 0) return null;
 
+  const visible = showAll ? reviews : reviews.slice(0, INITIAL_COUNT);
+  const hasMore = reviews.length > INITIAL_COUNT;
+
   return (
     <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
       <div className="text-center mb-12">
@@ -46,7 +52,7 @@ export function TestimonialsSection() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {reviews.map((r) => (
+        {visible.map((r) => (
           <div key={r.id} className="liquid-card rounded-3xl p-6">
             <StarRating rating={r.rating} />
             <p className="text-sm text-rose-text/60 leading-relaxed mt-4 mb-4 flex-1">
@@ -60,6 +66,20 @@ export function TestimonialsSection() {
           </div>
         ))}
       </div>
+
+      {hasMore && (
+        <div className="text-center mt-10">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center gap-2 rounded-2xl border border-rose-200/40 bg-white text-rose-text/50 font-semibold px-8 py-3 text-sm hover:bg-rose-50 hover:text-rose-text hover:border-rose-300/50 transition-all duration-300"
+          >
+            {showAll ? "Ver menos" : `Ver más testimonios`}
+            <svg className={`w-4 h-4 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+        </div>
+      )}
     </section>
   );
 }
