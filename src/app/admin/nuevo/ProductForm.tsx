@@ -48,8 +48,13 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
 
     setUploading(true);
     for (const file of Array.from(files)) {
+      const timestamp = Date.now();
+      const ext = file.name.split(".").pop() || "jpg";
+      const uniqueName = `product-${timestamp}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const renamedFile = new File([file], uniqueName, { type: file.type });
+
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", renamedFile);
       try {
         const res = await fetch("/api/upload", { method: "POST", body: fd });
         const data = await res.json();
@@ -57,7 +62,7 @@ export function ProductForm({ action, initialData }: ProductFormProps) {
           setGalleryImages((prev) => [...prev, data.url]);
         }
       } catch {}
-      await new Promise((r) => setTimeout(r, 1500));
+      await new Promise((r) => setTimeout(r, 3000));
     }
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
