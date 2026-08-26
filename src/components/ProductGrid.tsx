@@ -26,6 +26,29 @@ interface ProductGridProps {
 
 const INITIAL_COUNT = 6;
 
+const categoryBanners: Record<string, { title: string; description: string; gradient: string }> = {
+  Amigurumis: {
+    title: "Amigurumis",
+    description: "Personajes tejidos a mano llenos de amor y personalidad",
+    gradient: "from-rose-100 to-pink-50",
+  },
+  Ropa: {
+    title: "Ropa Tejida",
+    description: "Prendas únicas, cómodas y con estilo propio",
+    gradient: "from-violet-100 to-purple-50",
+  },
+  Accesorios: {
+    title: "Accesorios",
+    description: "Detalles tejidos que completan tu look",
+    gradient: "from-amber-100 to-orange-50",
+  },
+  Patrones: {
+    title: "Patrones PDF",
+    description: "Tejí tus propios amigurumis con nuestras guías",
+    gradient: "from-emerald-100 to-teal-50",
+  },
+};
+
 export function ProductGrid({ products, initialCategory }: ProductGridProps) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState(initialCategory);
@@ -74,6 +97,13 @@ export function ProductGrid({ products, initialCategory }: ProductGridProps) {
           onChange={setCategory}
         />
       </div>
+
+      {category && categoryBanners[category] && (
+        <div className={`rounded-3xl bg-gradient-to-r ${categoryBanners[category].gradient} p-8 mb-10 text-center`}>
+          <h2 className="text-2xl sm:text-3xl font-bold text-rose-text mb-2">{categoryBanners[category].title}</h2>
+          <p className="text-sm text-rose-text/50">{categoryBanners[category].description}</p>
+        </div>
+      )}
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <p className="text-sm text-rose-text/30 font-medium">

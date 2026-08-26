@@ -25,6 +25,7 @@ interface Product {
   available: boolean;
   featured: boolean;
   imageUrl: string | null;
+  images: string | null;
   stock: number;
 }
 
@@ -127,6 +128,8 @@ export function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [filterStatus, setFilterStatus] = useState<"all" | "available" | "unavailable">("all");
+  const [filterStock, setFilterStock] = useState<"all" | "low" | "out">("all");
+  const [filterImages, setFilterImages] = useState<"all" | "with" | "without">("all");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkLoading, setBulkLoading] = useState(false);
   const [deletingReviewId, setDeletingReviewId] = useState<string | null>(null);
@@ -159,9 +162,18 @@ export function AdminDashboard() {
         filterStatus === "all" ||
         (filterStatus === "available" && p.available) ||
         (filterStatus === "unavailable" && !p.available);
-      return matchesSearch && matchesCategory && matchesStatus;
+      const matchesStock =
+        filterStock === "all" ||
+        (filterStock === "low" && p.stock > 0 && p.stock < 5) ||
+        (filterStock === "out" && p.stock === 0);
+      const hasImages = p.images && (() => { try { return Array.isArray(JSON.parse(p.images)) && JSON.parse(p.images).length > 0; } catch { return false; } })();
+      const matchesImages =
+        filterImages === "all" ||
+        (filterImages === "with" && (p.imageUrl || hasImages)) ||
+        (filterImages === "without" && !p.imageUrl && !hasImages);
+      return matchesSearch && matchesCategory && matchesStatus && matchesStock && matchesImages;
     });
-  }, [products, searchQuery, filterCategory, filterStatus]);
+  }, [products, searchQuery, filterCategory, filterStatus, filterStock, filterImages]);
 
   const stats = useMemo(() => {
     const totalRevenue = products.reduce((sum, p) => sum + p.price, 0);
@@ -333,6 +345,28 @@ export function AdminDashboard() {
     await loadSales();
   }
 
+  function exportSalesCSV() {
+    const headers = ["Producto", "Cliente", "Cantidad", "Precio Unitario", "Total", "Canal", "Notas", "Fecha"];
+    const rows = sales.map((s) => [
+      s.productName,
+      s.customerName || "",
+      String(s.quantity),
+      String(s.unitPrice),
+      String(s.totalPrice),
+      s.channel,
+      s.notes || "",
+      new Date(s.soldAt).toLocaleDateString("es-CL"),
+    ]);
+    const csv = [headers, ...rows].map((r) => r.map((c) => `"${c.replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ventas-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   // Tasks CRUD
   async function saveTask() {
     const t = localStorage.getItem("admin-token") || "";
@@ -469,6 +503,16 @@ export function AdminDashboard() {
                 <option value="all">Todos los estados</option>
                 <option value="available">Disponible</option>
                 <option value="unavailable">Bajo pedido</option>
+              </select>
+              <select value={filterStock} onChange={(e) => setFilterStock(e.target.value as typeof filterStock)} className="px-4 py-2.5 rounded-xl bg-white border border-rose-200/30 text-sm text-rose-text focus:outline-none focus:border-rose-300 appearance-none cursor-pointer">
+                <option value="all">Todo el stock</option>
+                <option value="low">Stock bajo (&lt;5)</option>
+                <option value="out">Sin stock</option>
+              </select>
+              <select value={filterImages} onChange={(e) => setFilterImages(e.target.value as typeof filterImages)} className="px-4 py-2.5 rounded-xl bg-white border border-rose-200/30 text-sm text-rose-text focus:outline-none focus:border-rose-300 appearance-none cursor-pointer">
+                <option value="all">Todas las imágenes</option>
+                <option value="with">Con imágenes</option>
+                <option value="without">Sin imágenes</option>
               </select>
             </div>
           </div>
@@ -689,6 +733,10 @@ export function AdminDashboard() {
                 {p === "all" ? "Todo" : p === "month" ? "Este mes" : "Esta semana"}
               </button>
             ))}
+            <button onClick={exportSalesCSV} disabled={sales.length === 0} className="ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-rose-200/30 text-sm font-semibold text-rose-text/50 hover:bg-rose-50 hover:text-rose-text transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
+              Exportar CSV
+            </button>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">

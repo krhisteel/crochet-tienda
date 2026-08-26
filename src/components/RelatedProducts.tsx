@@ -28,9 +28,9 @@ export function RelatedProducts({ currentId, category }: RelatedProductsProps) {
     fetch(`/api/products`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data: Product[]) => {
-        const related = data
-          .filter((p) => p.id !== currentId && p.category === category)
-          .slice(0, 3);
+        const sameCategory = data.filter((p) => p.id !== currentId && p.category === category);
+        const others = data.filter((p) => p.id !== currentId && p.category !== category);
+        const related = [...sameCategory, ...others].slice(0, 6);
         setProducts(related);
       })
       .catch(() => {});
@@ -47,11 +47,12 @@ export function RelatedProducts({ currentId, category }: RelatedProductsProps) {
         <h2 className="text-2xl sm:text-3xl font-bold text-rose-text">
           Te podría gustar
         </h2>
+        <p className="text-sm text-rose-text/40 mt-2">Más productos que te pueden encantar</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
         {products.map((product, i) => (
-          <div key={product.id} className={`fade-in-up stagger-${Math.min(i + 1, 3)}`}>
+          <div key={product.id} className={`fade-in-up stagger-${Math.min(i + 1, 6)}`}>
             <ProductCard product={product} />
           </div>
         ))}
